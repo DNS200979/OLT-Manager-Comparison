@@ -38,238 +38,127 @@
 </head>
 <body class="text-slate-800">
 
-    <header class="bg-slate-900 text-white py-8 shadow-md">
+    <header class="bg-slate-900 text-white pt-8 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold">OLT Management Comparison</h1>
-            <p class="mt-2 text-slate-300 text-lg">By Denis Fernandes</p>
+            <p class="mt-2 text-slate-300 text-lg mb-6">By Denis Fernandes</p>
+            
+            <div class="flex space-x-8 border-b border-slate-700">
+                <button onclick="switchGlobalTab('main-dashboard', this)" class="global-tab-btn border-b-2 border-emerald-500 text-white pb-3 font-semibold transition-colors">📊 Análise Comparativa</button>
+                <button onclick="switchGlobalTab('top-made4it-gallery', this)" class="global-tab-btn border-b-2 border-transparent text-slate-400 hover:text-white pb-3 font-semibold transition-colors">🖼️ Made4OLT & Galeria</button>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <section class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
-            <h2 class="text-2xl font-semibold mb-2">Profile Overview</h2>
-            <p class="text-slate-600 mb-6">This section highlights the main focus of each tool. Quickly understand where each system directs its development efforts: agile support, deep analytics, or ISP integration.</p>
+        <div id="main-dashboard" class="global-tab-content block space-y-12 animate-fade-in">
+            <section class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                <h2 class="text-2xl font-semibold mb-2">Profile Overview</h2>
+                <p class="text-slate-600 mb-6">This section highlights the main focus of each tool...</p>
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <div class="w-full lg:w-1/2 chart-container">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                    <div class="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-100 transition-colors hover:bg-emerald-100">
+                            <h3 class="font-bold text-emerald-800">📊 Made4IT</h3>
+                            <p class="text-sm text-emerald-700 mt-1">Strong focus on the ISP experience...</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-violet-50 border border-violet-100 transition-colors hover:bg-violet-100">
+                            <h3 class="font-bold text-violet-800">🔧 Aprecomm VNE</h3>
+                            <p class="text-sm text-violet-700 mt-1">Analytical and engineering focus...</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-blue-50 border border-blue-100 transition-colors hover:bg-blue-100">
+                            <h3 class="font-bold text-blue-800">☁️ Int6 Smart OLT</h3>
+                            <p class="text-sm text-blue-700 mt-1">Cloud approach focused on ease of use...</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-amber-50 border border-amber-100 transition-colors hover:bg-amber-100">
+                            <h3 class="font-bold text-amber-800">🏢 IXC Soft</h3>
+                            <p class="text-sm text-amber-700 mt-1">The absolute ecosystem player...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                <h2 class="text-2xl font-semibold mb-2">Interactive Feature Matrix</h2>
+                <p class="text-slate-600 mb-6">Select a category on the left menu to explore in detail...</p>
+
+                <div class="flex flex-col md:flex-row border border-slate-200 rounded-lg overflow-hidden">
+                    <div class="w-full md:w-1/4 bg-slate-50 border-r border-slate-200" id="category-menu">
+                        <button onclick="updateMatrix('provisioning', this)" class="cat-active w-full text-left px-4 py-4 text-sm transition-colors">⚙️ Provisioning & ONUs</button>
+                        <button onclick="updateMatrix('monitoring', this)" class="cat-inactive w-full text-left px-4 py-4 text-sm transition-colors">📈 Monitoring & Data</button>
+                        <button onclick="updateMatrix('alarms', this)" class="cat-inactive w-full text-left px-4 py-4 text-sm transition-colors">🚨 Alarms & Events</button>
+                        <button onclick="updateMatrix('integration', this)" class="cat-inactive w-full text-left px-4 py-4 text-sm transition-colors">🔗 Integrations & Ecosystem</button>
+                        <button onclick="updateMatrix('usability', this)" class="cat-inactive w-full text-left px-4 py-4 text-sm transition-colors">💻 Usability & Target User</button>
+                    </div>
+
+                    <div class="w-full md:w-3/4 p-6 bg-white transition-opacity duration-300" id="matrix-content">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="top-made4it-gallery" class="global-tab-content hidden animate-fade-in space-y-8">
             
-            <div class="flex flex-col lg:flex-row items-center gap-8">
-                <div class="w-full lg:w-1/2 chart-container">
-                    <canvas id="radarChart"></canvas>
-                </div>
-                <div class="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-100 transition-colors hover:bg-emerald-100">
-                        <h3 class="font-bold text-emerald-800">📊 Made4IT</h3>
-                        <p class="text-sm text-emerald-700 mt-1">Strong focus on the ISP experience, with deep Radius integration, signal heatmaps, and a subscriber-centric PPPoE connection view.</p>
-                    </div>
-                    <div class="p-4 rounded-lg bg-violet-50 border border-violet-100 transition-colors hover:bg-violet-100">
-                        <h3 class="font-bold text-violet-800">🔧 Aprecomm VNE</h3>
-                        <p class="text-sm text-violet-700 mt-1">Analytical and engineering focus. Highlights include "PON Insights", complex alarm management, OLT configuration (Switch/LACP), and granular reports.</p>
-                    </div>
-                    <div class="p-4 rounded-lg bg-blue-50 border border-blue-100 transition-colors hover:bg-blue-100">
-                        <h3 class="font-bold text-blue-800">☁️ Int6 Smart OLT</h3>
-                        <p class="text-sm text-blue-700 mt-1">Cloud approach focused on ease of use, agile provisioning, massive Multi-Vendor support, and centralized ONU firmware management via TR-069.</p>
-                    </div>
-                    <div class="p-4 rounded-lg bg-amber-50 border border-amber-100 transition-colors hover:bg-amber-100">
-                        <h3 class="font-bold text-amber-800">🏢 IXC Soft</h3>
-                        <p class="text-sm text-amber-700 mt-1">The absolute ecosystem player. Deeply integrated with the IXC ERP, automating workflows from commercial contracts directly to physical OLT provisioning and billing blocks.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <section class="bg-white rounded-xl shadow-sm p-8 border border-slate-100">
+                <h2 class="text-3xl font-bold text-emerald-700 mb-4">Made4OLT: Automação e Foco em Provedores de Médio e Grande Porte</h2>
+                <p class="text-slate-700 mb-4 leading-relaxed">
+                    O Made4OLT, desenvolvido pela Made4it, posiciona-se como uma das soluções mais completas para o gerenciamento de redes ópticas no Brasil. A plataforma foi desenhada para centralizar o registro de OLTs, a criação de perfis de linha (line profiles) e o provisionamento de ONUs através de uma interface web intuitiva, eliminando a necessidade de interação direta com a CLI do equipamento.
+                </p>
+                <p class="text-slate-700 mb-8 leading-relaxed">
+                    A compatibilidade do Made4OLT é um de seus pilares, abrangendo os principais fabricantes que dominam o mercado nacional. A homologação de um equipamento no Made4OLT envolve um processo rigoroso de validação de acesso e portas de firewall, garantindo que todas as funcionalidades de provisionamento via script ou XML funcionem de forma confiável.
+                </p>
 
-        <section class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 overflow-x-auto">
-            <h2 class="text-2xl font-semibold mb-2">Supported Hardware Matrix (Homologated OLTs)</h2>
-            <p class="text-slate-600 mb-6">A comparative look at the manufacturer compatibility across the different management platforms.</p>
-            
-            <table class="min-w-full text-left border-collapse">
-                <thead>
-                    <tr class="bg-slate-100 text-slate-700 uppercase text-sm leading-normal">
-                        <th class="py-3 px-6 border-b border-slate-200">Manufacturer</th>
-                        <th class="py-3 px-6 border-b border-slate-200 text-center text-emerald-700">Made4IT</th>
-                        <th class="py-3 px-6 border-b border-slate-200 text-center text-violet-700">Aprecomm VNE</th>
-                        <th class="py-3 px-6 border-b border-slate-200 text-center text-blue-700">Int6 Smart OLT</th>
-                        <th class="py-3 px-6 border-b border-slate-200 text-center text-amber-700">IXC Soft</th>
-                    </tr>
-                </thead>
-                <tbody class="text-slate-600 text-sm">
-                    <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="py-3 px-6 font-semibold">Huawei</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                    </tr>
-                    <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="py-3 px-6 font-semibold">ZTE</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                    </tr>
-                    <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="py-3 px-6 font-semibold">Fiberhome</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">⚠️ Limited</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                    </tr>
-                    <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="py-3 px-6 font-semibold">Nokia / Alcatel</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">⚠️ Limited</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                    </tr>
-                    <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="py-3 px-6 font-semibold">Datacom</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">❌ No</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                    </tr>
-                    <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="py-3 px-6 font-semibold">Intelbras</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">❌ No</td>
-                        <td class="py-3 px-6 text-center">⚠️ Limited</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                    </tr>
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-3 px-6 font-semibold">V-Sol / Parks</td>
-                        <td class="py-3 px-6 text-center">⚠️ Scripts</td>
-                        <td class="py-3 px-6 text-center">❌ No</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                        <td class="py-3 px-6 text-center">✅ Supported</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
-            <h2 class="text-2xl font-semibold mb-2">Interactive Feature Matrix</h2>
-            <p class="text-slate-600 mb-6">Select a category on the left menu to explore in detail how each system solves the different operational needs of an FTTx network.</p>
-
-            <div class="flex flex-col md:flex-row border border-slate-200 rounded-lg overflow-hidden">
-                <div class="w-full md:w-1/4 bg-slate-50 border-r border-slate-200" id="category-menu">
-                    <button onclick="updateMatrix('provisioning', this)" class="cat-active w-full text-left px-4 py-4 text-sm transition-colors">⚙️ Provisioning & ONUs</button>
-                    <button onclick="updateMatrix('monitoring', this)" class="cat-inactive w-full text-left px-4 py-4 text-sm transition-colors">📈 Monitoring & Data</button>
-                    <button onclick="updateMatrix('alarms', this)" class="cat-inactive w-full text-left px-4 py-4 text-sm transition-colors">🚨 Alarms & Events</button>
-                    <button onclick="updateMatrix('integration', this)" class="cat-inactive w-full text-left px-4 py-4 text-sm transition-colors">🔗 Integrations & Ecosystem</button>
-                    <button onclick="updateMatrix('usability', this)" class="cat-inactive w-full text-left px-4 py-4 text-sm transition-colors">💻 Usability & Target User</button>
+                <div class="overflow-x-auto mb-8 rounded-lg border border-slate-200">
+                    <table class="min-w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 border-b border-slate-200">Fabricante</th>
+                                <th class="py-3 px-6 border-b border-slate-200">Modelos/Status</th>
+                                <th class="py-3 px-6 border-b border-slate-200">Recursos Suportados</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-600 text-sm">
+                            <tr class="hover:bg-slate-50 border-b border-slate-100">
+                                <td class="py-3 px-6 font-semibold">Huawei</td><td class="py-3 px-6">Homologado</td><td class="py-3 px-6">Provisionamento XML/Script, VLANs, Uplinks</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 border-b border-slate-100">
+                                <td class="py-3 px-6 font-semibold">ZTE</td><td class="py-3 px-6">Homologado</td><td class="py-3 px-6">C300/C320, Ativação Trap Mode, Service Ports</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 border-b border-slate-100">
+                                <td class="py-3 px-6 font-semibold">Fiberhome</td><td class="py-3 px-6">Homologado</td><td class="py-3 px-6">Templates de ONU, Atualização de Firmware</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 border-b border-slate-100">
+                                <td class="py-3 px-6 font-semibold">Datacom</td><td class="py-3 px-6">Homologado</td><td class="py-3 px-6">Monitoramento em Tempo Real, Comandos Iniciais</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 border-b border-slate-100">
+                                <td class="py-3 px-6 font-semibold">Intelbras</td><td class="py-3 px-6">Homologado</td><td class="py-3 px-6">Gestão de Perfis, Registro de VLANs</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 border-b border-slate-100">
+                                <td class="py-3 px-6 font-semibold">Parks</td><td class="py-3 px-6">Homologado</td><td class="py-3 px-6">Provisionamento de ONUs, Diagnóstico</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 border-b border-slate-100">
+                                <td class="py-3 px-6 font-semibold">Nokia</td><td class="py-3 px-6">Suportado</td><td class="py-3 px-6">Gestão de Ativos e Monitoramento</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="py-3 px-6 font-semibold">Furukawa</td><td class="py-3 px-6">Homologado</td><td class="py-3 px-6">Configuração de Portas e Line Profiles</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="w-full md:w-3/4 p-6 bg-white transition-opacity duration-300" id="matrix-content">
-                    </div>
-            </div>
-        </section>
-
-        <section class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
-            <h2 class="text-2xl font-semibold mb-6">Deep Dive Analysis & Visual Galleries</h2>
-            <p class="text-slate-600 mb-6">Delve into the strengths and limitations of each tool, or browse the image galleries to understand the practical workflow and UI.</p>
-            
-            <div class="flex flex-wrap gap-2 border-b border-slate-200 mb-6">
-                <button onclick="switchTab('made4it', this)" class="tab-btn tab-active pb-2 px-3 focus:outline-none transition-all">Made4IT Analysis</button>
-                <button onclick="switchTab('vne', this)" class="tab-btn tab-inactive pb-2 px-3 focus:outline-none transition-all">Aprecomm VNE</button>
-                <button onclick="switchTab('smartolt', this)" class="tab-btn tab-inactive pb-2 px-3 focus:outline-none transition-all">Int6 Smart OLT</button>
-                <button onclick="switchTab('ixc', this)" class="tab-btn tab-inactive pb-2 px-3 focus:outline-none transition-all">IXC Soft</button>
-                <button onclick="switchTab('made4it-gallery', this)" class="tab-btn tab-inactive pb-2 px-3 focus:outline-none font-bold text-emerald-600 transition-all hover:bg-emerald-50 rounded-t-lg">🖼️ Made4IT Gallery</button>
-                <button onclick="switchTab('int6-gallery', this)" class="tab-btn tab-inactive pb-2 px-3 focus:outline-none font-bold text-blue-600 transition-all hover:bg-blue-50 rounded-t-lg">🖼️ Int6 Gallery</button>
-            </div>
-
-            <div id="tab-made4it" class="tab-content block animate-fade-in">
-                <h3 class="text-xl font-bold text-emerald-700 mb-4">Made4IT: The ISP's Eyes</h3>
-                <p class="mb-4 text-slate-700">Made4IT acts more as a customer-focused diagnostic tool than a simple PON manager. It shines in correlating subscriber data with physical network performance.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <h4 class="font-semibold mb-3 text-slate-800">📌 Key Strengths</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                            <li>Advanced visualization of bandwidth consumption per individual subscriber.</li>
-                            <li>Supported Radius integration (disconnection logs, real-time PPPoE sessions).</li>
-                            <li>Generation of Heatmaps based on optical power for rapid identification of mass failures.</li>
-                            <li>Interface developed specifically for the support workflow in high-volume ISPs.</li>
-                        </ul>
-                    </div>
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <h4 class="font-semibold mb-3 text-slate-800">⚠️ Potential Limitations</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                            <li>Critically depends on API integration with the ISP's ERP to deliver its maximum value.</li>
-                            <li>Less focus on low-level hardware adjustments (CLI, Switch ports) compared to pure network engineering tools.</li>
-                        </ul>
-                    </div>
+                <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg">
+                    <p class="text-emerald-900 text-sm leading-relaxed">
+                        <strong>Destaque Técnico:</strong> A funcionalidade de <em>"Ativação em Modo Trap"</em> é um diferencial importante. Ela permite que a OLT envie notificações proativas ao sistema sobre eventos de rede, como a desconexão de uma ONU ou falhas de energia, sem a necessidade de o sistema realizar consultas constantes (polling), o que otimiza o uso de recursos de rede. Além disso, o suporte ao provisionamento via XML em equipamentos compatíveis oferece uma camada de segurança e velocidade superior à emulação de scripts CLI tradicionais.
+                    </p>
                 </div>
-            </div>
+            </section>
 
-            <div id="tab-vne" class="tab-content hidden animate-fade-in">
-                <h3 class="text-xl font-bold text-violet-700 mb-4">Aprecomm VNE: Engineering and Deep Analysis</h3>
-                <p class="mb-4 text-slate-700">With a rigorous analytical focus, this tool is ideal for network engineers who demand granular control and deep insights into PON infrastructure health.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <h4 class="font-semibold mb-3 text-slate-800">📌 Key Strengths</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                            <li><strong>PON & System Insights:</strong> Modules with detailed reports filterable by any time window.</li>
-                            <li><strong>Alarm Management:</strong> Custom alarm group creation for segmented notifications.</li>
-                            <li><strong>Switch Control:</strong> Allows direct configuration of link aggregation (LACP) and mirroring (SPAN) via the interface.</li>
-                            <li>Rigorous Role-Based Access Control (RBAC).</li>
-                        </ul>
-                    </div>
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <h4 class="font-semibold mb-3 text-slate-800">⚠️ Potential Limitations</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                            <li>Highly technical interface, which may create a steeper learning curve for Level 1 support teams.</li>
-                            <li>Focus is almost exclusively on PON infrastructure (Layer 2), with little Supported visibility into the customer's service layer (PPPoE/IP).</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="tab-smartolt" class="tab-content hidden animate-fade-in">
-                <h3 class="text-xl font-bold text-blue-700 mb-4">Int6 Smart OLT: Agility and Multi-Vendor Ecosystem</h3>
-                <p class="mb-4 text-slate-700">Smart OLT stands out for its unifying architecture. Designed to break vendor lock-in, it allows managing mixed networks in a modern and agile interface.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <h4 class="font-semibold mb-3 text-slate-800">📌 Key Strengths</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                            <li><strong>Real Multi-Vendor:</strong> Transparently manages ZTE, Huawei, Fiberhome, Nokia, and Datacom OLTs simultaneously.</li>
-                            <li>Robust TR-069 support, allowing remote configuration of Wi-Fi routers directly from the dashboard.</li>
-                            <li>Massive processes such as batch ONU firmware updates with high efficiency.</li>
-                            <li>Clean and intuitive design that reduces Average Handle Time (AHT) for primary support teams.</li>
-                        </ul>
-                    </div>
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <h4 class="font-semibold mb-3 text-slate-800">⚠️ Potential Limitations</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                            <li>As a primarily cloud-focused platform, it may face resistance in operations requiring 100% On-Premise isolated environments.</li>
-                            <li>The simplified interface can hide very specific engineering parameters available only via the manufacturers' Command Line Interface (CLI).</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="tab-ixc" class="tab-content hidden animate-fade-in">
-                <h3 class="text-xl font-bold text-amber-700 mb-4">IXC Soft: The Ultimate ERP Ecosystem Integration</h3>
-                <p class="mb-4 text-slate-700">IXC approaches OLT management from a billing and contract perspective. By Supportedly linking the ERP to the OLT, it ensures absolute synchronicity between what the customer pays for and what the hardware delivers.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <h4 class="font-semibold mb-3 text-slate-800">📌 Key Strengths</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                            <li><strong>Unmatched ERP Synchronization:</strong> Automated block/unblock routines directly tied to billing status, requiring zero human intervention.</li>
-                            <li>Unified interface for commercial and technical teams, preventing "swivel chair" operations across different systems.</li>
-                            <li>Automatic support ticket generation when mass outages or specific PON failures are detected.</li>
-                            <li>Strong domestic market presence with continuous updates adapted to local ISP workflows.</li>
-                        </ul>
-                    </div>
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <h4 class="font-semibold mb-3 text-slate-800">⚠️ Potential Limitations</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                            <li>Vendor lock-in into the IXC software ecosystem. Not ideal if you use a different primary ERP.</li>
-                            <li>Less advanced engineering and low-level diagnostic tools compared to specialized solutions like VNE or Made4IT.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="tab-made4it-gallery" class="tab-content hidden animate-fade-in">
-                <h3 class="text-xl font-bold text-emerald-700 mb-2">Product Visuals: Made4IT</h3>
-                <p class="text-slate-500 mb-6 text-sm">Click on any image to enlarge.</p>
+            <section class="bg-white rounded-xl shadow-sm p-8 border border-slate-100">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Visualização da Interface (Galeria)</h3>
+                <p class="text-slate-500 mb-8 text-sm">Clique em qualquer imagem para expandir.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="space-y-2"><img src="imagem2.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="Provisioning Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">Provisioning Interface</p></div>
                     <div class="space-y-2"><img src="imagem1.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="Authorized ONUs Chart"><p class="text-xs text-center font-medium text-slate-500 uppercase">Chart: Authorized ONUs / Day</p></div>
@@ -282,47 +171,9 @@
                     <div class="space-y-2"><img src="imagem9.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="Unauthorized ONUs Management"><p class="text-xs text-center font-medium text-slate-500 uppercase">Unauthorized ONUs Management</p></div>
                     <div class="space-y-2"><img src="imagem10.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="ONU Signal History"><p class="text-xs text-center font-medium text-slate-500 uppercase">ONU Signal History</p></div>
                 </div>
-            </div>
+            </section>
+        </div>
 
-            <div id="tab-int6-gallery" class="tab-content hidden animate-fade-in">
-                <h3 class="text-xl font-bold text-blue-700 mb-2">Product Visuals: Int6 Smart OLT</h3>
-                <p class="text-slate-500 mb-6 text-sm">Below is the real Int6 management interface. Click images for fullscreen.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="space-y-2"><img src="int1.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int2.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int3.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int4.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int5.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int6.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int7.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int8.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int9.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int10.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int11.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int13.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int14.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int15.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int16.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int17.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int18.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int19.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int20.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int21.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int22.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int23.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int24.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int25.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int26.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int27.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int28.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int29.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int30.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int31.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                    <div class="space-y-2"><img src="int32.jpg" class="gallery-img rounded-lg shadow-sm border border-slate-200 w-full" alt="SmartOLT Interface"><p class="text-xs text-center font-medium text-slate-500 uppercase">SmartOLT Interface</p></div>
-                </div>
-            </div>
-
-        </section>
     </main>
 
     <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm border-t border-slate-800">
@@ -442,7 +293,30 @@
             buttonElement.classList.remove('tab-inactive');
             buttonElement.classList.add('tab-active');
         }
+        // Nova função para alternar as abas superiores
+        function switchGlobalTab(tabId, buttonElement) {
+            // Esconde todo conteúdo global
+            const tabs = document.querySelectorAll('.global-tab-content');
+            tabs.forEach(tab => {
+                tab.classList.remove('block');
+                tab.classList.add('hidden');
+            });
 
+            // Reseta cores dos botões
+            const btns = document.querySelectorAll('.global-tab-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('border-emerald-500', 'text-white');
+                btn.classList.add('border-transparent', 'text-slate-400');
+            });
+
+            // Mostra aba ativa
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('block');
+            
+            // Colore o botão ativo
+            buttonElement.classList.remove('border-transparent', 'text-slate-400');
+            buttonElement.classList.add('border-emerald-500', 'text-white');
+        }
         // Modal / Lightbox Logic
         function openModal(src) {
             document.getElementById('modal-img').src = src;
