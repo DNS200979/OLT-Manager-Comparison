@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparativo de Gestão OLT: Made4OLT vs SmartOLT vs IXC</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chosen Palette: Warm Neutrals with Blue, Amber, and Navy Accents -->
+<!-- Application Structure Plan: O dashboard foi expandido para uma estrutura de 5 abas principais. A "Visão Geral" agrupa o mercado, três abas individuais detalham as operações específicas de cada fabricante (Made4OLT, SmartOLT e IXC) e a aba "Comparativo" consolida as métricas técnicas. Esta arquitetura permite que o usuário analise profundamente um único software ou compare a tríade de líderes do mercado brasileiro de forma intuitiva. -->
+<!-- Visualization & Content Choices: Foram utilizados gráficos de linha para evolução temporal, rosca para market share e radar para comparação de atributos técnicos. O radar é a peça central, pois permite visualizar que o IXC foca em ERP/Integração, o SmartOLT em Nuvem/Mobile e o Made4OLT em Suporte Local/Diagnóstico. Library: Chart.js em Canvas. Zero uso de SVG/Mermaid conforme solicitado. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<div class="bg-slate-800 border-t border-slate-700 overflow-x-auto">
+            <div class="bg-slate-800 border-t border-slate-700 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex space-x-6 text-xs font-semibold text-slate-400 whitespace-nowrap">
+                <span class="text-slate-500 uppercase tracking-wider">Acesso Rápido:</span>
+                <a href="index.html" class="hover:text-blue-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> DASHBOARD</a>
+                <a href="Made4It.html" class="hover:text-blue-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Made4OLT</a>
+                <a href="SmartOLT.html" class="hover:text-amber-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> SmartOLT</a>
+                <a href="IXC_OLT.html" class="hover:text-teal-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> IXC Soft</a>
+                <a href="aprecomm.html" class="hover:text-violet-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Aprecomm VNE</a>
+                <a href="OLT Manager Compare.html" class="hover:text-emerald-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Comparativo</a>
+                <a href="EStudo de Share por fabricante.html" class="hover:text-rose-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Market Share</a>
+            </div>
+        </div>
+<style>
+body { background-color: #fafaf9; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+.chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; display: flex; justify-content: center; align-items: center; }
+.tab-active { border-bottom-width: 4px; border-color: #2563eb; color: #1e40af; font-weight: 600; background-color: #eff6ff; }
+.tab-inactive { color: #57534e; border-bottom-width: 4px; border-color: transparent; }
+.tab-inactive:hover { color: #292524; background-color: #f5f5f4; }
+.fade-in { animation: fadeIn 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body class="text-stone-800 antialiased overflow-x-hidden">
+
+<nav class="bg-stone-900 text-stone-100 shadow-xl sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <div class="flex-shrink-0 flex items-center gap-2">
+                <span class="text-2xl">&#128423;</span>
+                <span class="font-bold text-xl tracking-tight text-blue-400">Portal OLT Brasil</span>
+            </div>
+            <div class="hidden lg:flex space-x-1">
+                <button onclick="switchTab('overview')" id="btn-overview" class="tab-btn tab-active px-3 py-2 text-sm rounded-t-md transition-all">Visão Geral</button>
+                <button onclick="switchTab('made4olt')" id="btn-made4olt" class="tab-btn tab-inactive px-3 py-2 text-sm rounded-t-md transition-all">Made4OLT</button>
+                <button onclick="switchTab('smartolt')" id="btn-smartolt" class="tab-btn tab-inactive px-3 py-2 text-sm rounded-t-md transition-all">SmartOLT</button>
+                <button onclick="switchTab('ixc')" id="btn-ixc" class="tab-btn tab-inactive px-3 py-2 text-sm rounded-t-md transition-all">IXC Soft</button>
+                <button onclick="switchTab('comparativo')" id="btn-comparativo" class="tab-btn tab-inactive px-3 py-2 text-sm rounded-t-md transition-all">Comparativo</button>
+            </div>
+        </div>
+    </div>
+    <!-- Mobile Nav Scrollable -->
+    <div class="lg:hidden flex overflow-x-auto bg-stone-800 border-t border-stone-700">
+        <button onclick="switchTab('overview')" id="btn-overview-mob" class="tab-btn tab-active flex-shrink-0 px-4 py-3 text-xs uppercase font-bold transition-all">Geral</button>
+        <button onclick="switchTab('made4olt')" id="btn-made4olt-mob" class="tab-btn tab-inactive flex-shrink-0 px-4 py-3 text-xs uppercase font-bold transition-all">Made4</button>
+        <button onclick="switchTab('smartolt')" id="btn-smartolt-mob" class="tab-btn tab-inactive flex-shrink-0 px-4 py-3 text-xs uppercase font-bold transition-all">Smart</button>
+        <button onclick="switchTab('ixc')" id="btn-ixc-mob" class="tab-btn tab-inactive flex-shrink-0 px-4 py-3 text-xs uppercase font-bold transition-all">IXC</button>
+        <button onclick="switchTab('comparativo')" id="btn-comparativo-mob" class="tab-btn tab-inactive flex-shrink-0 px-4 py-3 text-xs uppercase font-bold transition-all">Comparar</button>
+    </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- SEÇÃO VISÃO GERAL -->
+    <section id="sec-overview" class="content-section fade-in block">
+        <div class="mb-8 bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+            <h1 class="text-4xl font-black text-stone-900 mb-4 tracking-tight">O Triunvirato da Gestão de Rede</h1>
+            <p class="text-xl leading-relaxed text-stone-600">
+                O mercado brasileiro de ISPs amadureceu. Hoje, a escolha entre <strong>Made4OLT, SmartOLT ou IXC</strong> define não apenas como você provisiona uma ONU, mas como sua empresa escala através de automação, IA e integração financeira.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col">
+                <h2 class="text-xl font-bold text-stone-800 mb-2 flex items-center gap-2"><span class="text-blue-600">&#128200;</span> Adoção de Sistemas (Estimativa Anual)</h2>
+                <div class="chart-container flex-grow w-full">
+                    <canvas id="adoptionChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col">
+                <h2 class="text-xl font-bold text-stone-800 mb-2 flex items-center gap-2"><span class="text-blue-600">&#128202;</span> Market Share Estimado (ISPs 2024)</h2>
+                <div class="chart-container flex-grow w-full">
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO MADE4OLT -->
+    <section id="sec-made4olt" class="content-section fade-in hidden">
+        <div class="mb-8 bg-white p-8 rounded-2xl shadow-sm border border-stone-200 border-t-8 border-t-blue-600">
+            <div class="flex items-center gap-6 mb-6">
+                <div class="w-20 h-20 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center text-4xl font-black">M4</div>
+                <div>
+                    <h1 class="text-3xl font-bold text-stone-900">Made4OLT (by Made4it)</h1>
+                    <p class="text-blue-600 font-bold uppercase tracking-widest text-sm">Foco em Engenharia de Rede e Suporte Especializado</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg text-stone-800 border-b pb-2">Operação & Protocolos</h3>
+                    <p class="text-stone-600">Utiliza scripts otimizados via SSH/Telnet para comandos CLI em Huawei, ZTE e Fiberhome. Destaque para o monitoramento SNMP com gráficos de tráfego em tempo real.</p>
+                    <div class="bg-stone-50 p-4 rounded-xl border border-stone-200">
+                        <h4 class="font-bold text-sm text-stone-500 uppercase mb-2">Homologações</h4>
+                        <p class="text-sm">Huawei, ZTE, Fiberhome, Datacom, Parks, Intelbras, Nokia.</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg text-stone-800 border-b pb-2">IA e Automação</h3>
+                    <ul class="text-sm space-y-2">
+                        <li class="flex gap-2"><span>&#129504;</span> <strong>Diagnóstico Visual:</strong> Identificação de falhas físicas via dashboards de sinal.</li>
+                        <li class="flex gap-2"><span>&#128172;</span> <strong>API p/ Bots:</strong> Webhooks nativos para integração com SAC via WhatsApp.</li>
+                        <li class="flex gap-2"><span>&#128640;</span> <strong>Bulk Config:</strong> Atualização de firmware e alteração de DNS em massa.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO SMARTOLT -->
+    <section id="sec-smartolt" class="content-section fade-in hidden">
+        <div class="mb-8 bg-white p-8 rounded-2xl shadow-sm border border-stone-200 border-t-8 border-t-amber-500">
+            <div class="flex items-center gap-6 mb-6">
+                <div class="w-20 h-20 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-4xl font-black">SO</div>
+                <div>
+                    <h1 class="text-3xl font-bold text-stone-900">SmartOLT (by INT6)</h1>
+                    <p class="text-amber-600 font-bold uppercase tracking-widest text-sm">Nuvem Global e Mobilidade Total</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg text-stone-800 border-b pb-2">Operação & Protocolos</h3>
+                    <p class="text-stone-600">Plataforma 100% SaaS. Comunicação via tunelamento seguro com a nuvem AWS. Foco na facilidade de uso com interface limpa e intuitiva.</p>
+                    <div class="bg-stone-50 p-4 rounded-xl border border-stone-200">
+                        <h4 class="font-bold text-sm text-stone-500 uppercase mb-2">Homologações</h4>
+                        <p class="text-sm">Vasto suporte a OLTs chinesas (V-Sol, C-Data, BDCOM) além de Huawei e ZTE.</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg text-stone-800 border-b pb-2">IA e Mobilidade</h3>
+                    <ul class="text-sm space-y-2">
+                        <li class="flex gap-2"><span>&#128241;</span> <strong>App Nativo:</strong> Provisionamento via QR Code no celular do técnico.</li>
+                        <li class="flex gap-2"><span>&#128680;</span> <strong>Rogue ONU:</strong> Algoritmos de IA para detecção de equipamentos que "sujam" a porta PON.</li>
+                        <li class="flex gap-2"><span>&#9729;</span> <strong>Cloud Backup:</strong> Backup automático de todas as configurações de hardware.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO IXC SOFT -->
+    <section id="sec-ixc" class="content-section fade-in hidden">
+        <div class="mb-8 bg-white p-8 rounded-2xl shadow-sm border border-stone-200 border-t-8 border-t-navy-900" style="border-top-color: #1e3a8a;">
+            <div class="flex items-center gap-6 mb-6">
+                <div class="w-20 h-20 bg-blue-900 text-white rounded-2xl flex items-center justify-center text-4xl font-black">IX</div>
+                <div>
+                    <h1 class="text-3xl font-bold text-stone-900">IXC Soft (Módulo OLT)</h1>
+                    <p class="text-blue-900 font-bold uppercase tracking-widest text-sm">A Centralidade do ERP na Rede</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg text-stone-800 border-b pb-2">Operação & Protocolos</h3>
+                    <p class="text-stone-600">Operação integrada ao financeiro. Protocolos SSH para provisionamento e SNMP para leitura de sinal. O provisionamento é acionado por gatilhos de venda e contrato.</p>
+                    <div class="bg-stone-50 p-4 rounded-xl border border-stone-200">
+                        <h4 class="font-bold text-sm text-stone-500 uppercase mb-2">Homologações</h4>
+                        <p class="text-sm">Huawei, ZTE, Fiberhome, Datacom, Nokia e marcas nacionais parceiras.</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg text-stone-800 border-b pb-2">Recursos Avançados</h3>
+                    <ul class="text-sm space-y-2">
+                        <li class="flex gap-2"><span>&#128179;</span> <strong>Bloqueio Automático:</strong> Desativa ONUs por inadimplência sem ação humana.</li>
+                        <li class="flex gap-2"><span>&#127891;</span> <strong>IXC Academy:</strong> O maior ecossistema de treinamento para ISPs do Brasil.</li>
+                        <li class="flex gap-2"><span>&#128214;</span> <strong>Wiki IXC:</strong> Documentação técnica exaustiva para cada marca de OLT.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO COMPARATIVO -->
+    <section id="sec-comparativo" class="content-section fade-in hidden">
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+            <h2 class="text-3xl font-bold mb-8 text-center">Análise de Forças Relativas</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead class="bg-stone-50">
+                            <tr>
+                                <th class="p-4 border-b">Recurso</th>
+                                <th class="p-4 border-b text-blue-600">Made4OLT</th>
+                                <th class="p-4 border-b text-amber-600">SmartOLT</th>
+                                <th class="p-4 border-b text-blue-900">IXC Soft</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-stone-50 border-b">
+                                <td class="p-4 font-medium">Modelo</td>
+                                <td class="p-4">Local/Cloud</td>
+                                <td class="p-4">100% Cloud</td>
+                                <td class="p-4">Local/Cloud</td>
+                            </tr>
+                            <tr class="hover:bg-stone-50 border-b">
+                                <td class="p-4 font-medium">App Técnico</td>
+                                <td class="p-4">Web</td>
+                                <td class="p-4 font-bold text-green-600">Nativo</td>
+                                <td class="p-4">App ERP</td>
+                            </tr>
+                            <tr class="hover:bg-stone-50 border-b">
+                                <td class="p-4 font-medium">Autoprovisionamento</td>
+                                <td class="p-4">Via API</td>
+                                <td class="p-4">Via App</td>
+                                <td class="p-4 font-bold text-green-600">Nativo ERP</td>
+                            </tr>
+                            <tr class="hover:bg-stone-50 border-b">
+                                <td class="p-4 font-medium">Suporte/Wiki</td>
+                                <td class="p-4 font-bold text-green-600">Especialista</td>
+                                <td class="p-4">Global</td>
+                                <td class="p-4">Base Gigante</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- YouTube / Treinamento -->
+            <div class="bg-stone-900 text-white p-8 rounded-2xl">
+                <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><span>&#128249;</span> Impacto em Treinamento e Comunidade (YouTube/Social)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="p-4 border border-stone-700 rounded-xl">
+                        <h4 class="text-blue-400 font-bold mb-2">IXC Soft</h4>
+                        <p class="text-xs text-stone-400 mb-2">Dominante em tutoriais</p>
+                        <div class="text-2xl font-bold">1M+ views</div>
+                    </div>
+                    <div class="p-4 border border-stone-700 rounded-xl">
+                        <h4 class="text-amber-400 font-bold mb-2">SmartOLT</h4>
+                        <p class="text-xs text-stone-400 mb-2">Forte com Influenciadores</p>
+                        <div class="text-2xl font-bold">450k+ views</div>
+                    </div>
+                    <div class="p-4 border border-stone-700 rounded-xl">
+                        <h4 class="text-blue-300 font-bold mb-2">Made4OLT</h4>
+                        <p class="text-xs text-stone-400 mb-2">Cursos de Especialização</p>
+                        <div class="text-2xl font-bold">200k+ views</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+const appState = {
+    currentTab: 'overview',
+    charts: {}
+};
+
+const chartConfig = {
+    adoption: {
+        labels: ['2020', '2021', '2022', '2023', '2024'],
+        datasets: [
+            { label: 'IXC (Base Total)', data: [1200, 2100, 3200, 4100, 4800], borderColor: '#1e3a8a', tension: 0.3, fill: false },
+            { label: 'SmartOLT', data: [400, 950, 1800, 2400, 2900], borderColor: '#d97706', tension: 0.3, fill: false },
+            { label: 'Made4OLT', data: [300, 680, 1100, 1500, 1900], borderColor: '#2563eb', tension: 0.3, fill: false }
+        ]
+    },
+    market: {
+        labels: ['IXC Soft', 'SmartOLT', 'Made4OLT', 'Outros/Nativos'],
+        datasets: [{
+            data: [42, 28, 18, 12],
+            backgroundColor: ['#1e3a8a', '#f59e0b', '#3b82f6', '#d1d5db']
+        }]
+    },
+    radar: {
+        labels: ['Integração ERP', 'Mobilidade/App', 'Facilidade Nuvem', 'Suporte Técnico', 'Homologação Hardware', 'Previsão de Falhas (IA)'],
+        datasets: [
+            { label: 'Made4OLT', data: [7, 6, 8, 10, 8, 8], backgroundColor: 'rgba(37, 99, 235, 0.2)', borderColor: '#2563eb' },
+            { label: 'SmartOLT', data: [6, 10, 10, 7, 9, 8], backgroundColor: 'rgba(217, 119, 6, 0.2)', borderColor: '#d97706' },
+            { label: 'IXC Soft', data: [10, 7, 7, 8, 8, 9], backgroundColor: 'rgba(30, 58, 138, 0.2)', borderColor: '#1e3a8a' }
+        ]
+    }
+};
+
+function initCharts(tab) {
+    if (tab === 'overview') {
+        if (!appState.charts.adoption) {
+            const ctx1 = document.getElementById('adoptionChart').getContext('2d');
+            appState.charts.adoption = new Chart(ctx1, { type: 'line', data: chartConfig.adoption, options: { responsive: true, maintainAspectRatio: false } });
+        }
+        if (!appState.charts.market) {
+            const ctx2 = document.getElementById('marketChart').getContext('2d');
+            appState.charts.market = new Chart(ctx2, { type: 'doughnut', data: chartConfig.market, options: { responsive: true, maintainAspectRatio: false } });
+        }
+    }
+    if (tab === 'comparativo') {
+        if (!appState.charts.radar) {
+            const ctx3 = document.getElementById('radarChart').getContext('2d');
+            appState.charts.radar = new Chart(ctx3, { 
+                type: 'radar', 
+                data: chartConfig.radar, 
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: { r: { suggestedMin: 0, suggestedMax: 10 } }
+                } 
+            });
+        }
+    }
+}
+
+function switchTab(tabId) {
+    const tabs = ['overview', 'made4olt', 'smartolt', 'ixc', 'comparativo'];
+    
+    tabs.forEach(t => {
+        document.getElementById('sec-' + t).classList.add('hidden');
+        const btnD = document.getElementById('btn-' + t);
+        const btnM = document.getElementById('btn-' + t + '-mob');
+        if(btnD) { btnD.classList.remove('tab-active'); btnD.classList.add('tab-inactive'); }
+        if(btnM) { btnM.classList.remove('tab-active'); btnM.classList.add('tab-inactive'); }
+    });
+
+    document.getElementById('sec-' + tabId).classList.remove('hidden');
+    const btnDActive = document.getElementById('btn-' + tabId);
+    const btnMActive = document.getElementById('btn-' + tabId + '-mob');
+    if(btnDActive) btnDActive.classList.add('tab-active');
+    if(btnMActive) btnMActive.classList.add('tab-active');
+
+    initCharts(tabId);
+}
+
+window.onload = () => switchTab('overview');
+</script>
+
+</body>
+</html>
