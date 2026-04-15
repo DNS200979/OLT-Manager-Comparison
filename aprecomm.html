@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprecomm VNE - Inteligência Artificial para Redes Ópticas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            900: '#134e4a',
+                            dark: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+<div class="bg-slate-800 border-t border-slate-700 overflow-x-auto">
+        <div class="bg-slate-800 border-t border-slate-700 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex space-x-6 text-xs font-semibold text-slate-400 whitespace-nowrap">
+                <span class="text-slate-500 uppercase tracking-wider">Acesso Rápido:</span>
+                <a href="index.html" class="hover:text-blue-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> DASHBOARD</a>
+                <a href="Made4It.html" class="hover:text-blue-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Made4OLT</a>
+                <a href="SmartOLT.html" class="hover:text-amber-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> SmartOLT</a>
+                <a href="IXC_OLT.html" class="hover:text-teal-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> IXC Soft</a>
+                <a href="aprecomm.html" class="hover:text-violet-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Aprecomm VNE</a>
+                <a href="OLT Manager Compare.html" class="hover:text-emerald-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Comparativo</a>
+                <a href="EStudo de Share por fabricante.html" class="hover:text-rose-400 transition flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Market Share</a>
+            </div>
+        </div>
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-network-wired text-brand-600 text-2xl"></i>
+                    <span class="font-bold text-xl tracking-tight text-slate-800">Aprecomm <span class="text-brand-600">VNE</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#visao-geral" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Visão Geral</a>
+                    <a href="#evolv" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Motor Evolv</a>
+                    <a href="#multivendor" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Multivendor</a>
+                    <a href="#kpis" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Resultados (Brasil)</a>
+                    <a href="#aivra" class="text-sm font-medium text-brand-600 hover:text-brand-800 transition-colors"><i class="fa-solid fa-robot mr-1"></i> AIVRA</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 hover:text-brand-600 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-brand-dark pt-24 pb-32 lg:pt-36 lg:pb-40 overflow-hidden hero-pattern">
+        <div class="absolute inset-0 bg-gradient-to-br from-brand-900/90 to-slate-900/95"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand-500/20 text-brand-100 text-sm font-semibold tracking-wider mb-4 border border-brand-500/30">
+                AIOps para Provedores de Internet
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6">
+                Orquestração Inteligente para <br class="hidden md:block" />
+                <span class="gradient-text">Redes Ópticas</span>
+            </h1>
+            <p class="mt-4 max-w-3xl mx-auto text-xl text-gray-300 leading-relaxed">
+                O Virtual Network Expert (VNE) transcende a gestão tradicional. Transforme sua OLT em um sensor inteligente focado na Qualidade de Experiência (QoE) do seu assinante através de Inteligência Artificial.
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="#visao-geral" class="px-8 py-3.5 border border-transparent text-base font-medium rounded-lg text-white bg-brand-600 hover:bg-brand-500 transition-all shadow-lg shadow-brand-500/30">
+                    Conhecer a Arquitetura
+                </a>
+                <a href="#kpis" class="px-8 py-3.5 border border-gray-600 text-base font-medium rounded-lg text-white hover:bg-white/10 transition-all">
+                    Ver Impacto de Negócio
+                </a>
+            </div>
+        </div>
+        <!-- Decorative bottom wave -->
+        <div class="absolute bottom-0 inset-x-0">
+            <svg class="w-full h-12 md:h-24 text-gray-50 fill-current" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.3,195.4,103.55Z"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Visão Geral & Paradigma -->
+    <section id="visao-geral" class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 tracking-tight">Mudança de Paradigma na Gestão PON</h2>
+                    <div class="prose prose-brand text-gray-600 text-lg leading-relaxed">
+                        <p class="mb-4">
+                            A infraestrutura de banda larga atingiu uma complexidade onde o gerenciamento humano e as ferramentas legadas já não garantem competitividade. No dinâmico mercado brasileiro de ISPs, a transição para <strong>AIOps</strong> é imperativa.
+                        </p>
+                        <p class="mb-4">
+                            O Aprecomm VNE dissocia a inteligência da rede do hardware proprietário. Ingerindo telemetria do backplane da OLT até o tráfego lógico, ele cria um <span class="font-semibold text-brand-600">"gêmeo digital"</span> da sua rede.
+                        </p>
+                        <p>
+                            Não se trata apenas de "online" ou "offline". É uma análise microscópica de latência, perda de pacotes e padrões de consumo, permitindo identificar gargalos <em>antes</em> que o usuário perceba degradação.
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-10 lg:mt-0 relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-400 to-blue-500 transform skew-y-3 rounded-3xl opacity-20 -z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800&h=600" alt="Server Room" class="rounded-2xl shadow-xl border border-gray-200">
+                    
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg border border-gray-100 flex items-center gap-4">
+                        <div class="bg-green-100 p-3 rounded-full text-green-600">
+                            <i class="fa-solid fa-check-double text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Foco Principal</p>
+                            <p class="font-bold text-gray-900">Qualidade de Experiência (QoE)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Motor Evolv & Arquitetura -->
+    <section id="evolv" class="py-16 md:py-24 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2">Arquitetura Técnica</h2>
+                <h3 class="text-3xl font-bold text-gray-900 sm:text-4xl">O Motor de Inteligência Evolv</h3>
+                <p class="mt-4 text-lg text-gray-600">
+                    Processando milhões de eventos por segundo em uma arquitetura híbrida Borda-Nuvem, o Evolv garante visibilidade 360 graus de toda a pilha OSI.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Processamento Híbrido</h4>
+                    <p class="text-gray-600">
+                        Equilibra inteligência na borda da rede com análise massiva na nuvem, extraindo dados diretamente de OLTs e pontos de agregação sem depender apenas de agentes em ONTs.
+                    </p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-lg flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Visibilidade 360 Graus</h4>
+                    <p class="text-gray-600">
+                        Triangula a origem exata de falhas cruzando dados de OLTs, ONTs e telemetria de CDN. Descubra se a falha no streaming é saturação de uplink, atenuação do splitter ou Wi-Fi congestionado.
+                    </p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Baixo Overhead</h4>
+                    <p class="text-gray-600">
+                        Ingestão de dados desenhada logicamente para minimizar o peso na rede, garantindo alta granularidade de insights sem comprometer a banda dos assinantes.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Telemetry Table -->
+            <div class="mt-16 bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-5 border-b border-gray-200 bg-gray-50/50">
+                    <h4 class="text-lg font-bold text-gray-900">Mecanismos de Telemetria e Ingestão de Dados</h4>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Camada de Coleta</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Protocolos e Fontes</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo de Informação Capturada</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900"><i class="fa-solid fa-layer-group text-gray-400 mr-2"></i> Física (OLT)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><span class="bg-gray-100 px-2 py-1 rounded">SNMP v2/v3</span> <span class="bg-gray-100 px-2 py-1 rounded">Syslog</span> <span class="bg-gray-100 px-2 py-1 rounded">CLI</span></td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Níveis de potência óptica, erros de FEC, temperatura do chassi, saúde da fonte.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900"><i class="fa-solid fa-network-wired text-gray-400 mr-2"></i> Lógica (ONU/ONT)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><span class="bg-gray-100 px-2 py-1 rounded">OMCI (ITU-T G.988)</span> <span class="bg-gray-100 px-2 py-1 rounded">TR-069</span></td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Status de registro, configuração de VLAN, estatísticas de tráfego por porta.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-brand-600"><i class="fa-solid fa-globe text-brand-400 mr-2"></i> Serviço</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><span class="bg-brand-50 text-brand-700 px-2 py-1 rounded font-medium border border-brand-200">USP (TR-369)</span> <span class="bg-gray-100 px-2 py-1 rounded">Netconf/YANG</span></td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Telemetria bidirecional em tempo real (eventos e não polling), latência de aplicação, desempenho DNS.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900"><i class="fa-solid fa-route text-gray-400 mr-2"></i> Agregação</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><span class="bg-gray-100 px-2 py-1 rounded">Flow-based</span> <span class="bg-gray-100 px-2 py-1 rounded">IPFIX</span></td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Padrões de tráfego de backbone, saturação de portas 10G/100G.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compatibilidade Multivendor -->
+ <!--   <section id="multivendor" class="py-16 md:py-24 bg-slate-900 text-white relative overflow-hidden">
+        Decorational background elements -->
+      <!--  <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-brand-500 opacity-10 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-blue-500 opacity-10 blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-brand-400 font-semibold tracking-wide uppercase text-sm mb-2">Liberdade de Escolha</h2>
+                <h3 class="text-3xl font-bold sm:text-4xl mb-4">Homologações e Compatibilidade Multivendor</h3>
+                <p class="text-gray-400 text-lg">
+                    Quebre o monopólio de software dos fabricantes de hardware. O VNE aplica uma camada de abstração (normalização OMCI) que garante a mesma precisão na gestão, independente da marca da sua OLT.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Huawei -->
+             <!--   <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-brand-500 transition-colors">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xl font-bold text-white">Huawei</h4>
+                        <i class="fa-solid fa-server text-gray-500"></i>
+                    </div>
+                    <p class="text-sm text-brand-400 mb-3 font-mono">MA5608T, MA5800 (X2/X7/X15)</p>
+                    <p class="text-gray-400 text-sm">Leitura profunda de MIBs, gestão completa de potência óptica, provisionamento ZTP e isolamento de falhas em ONUs de terceiros em modo de compatibilidade.</p>
+                </div>
+                <!-- ZTE -->
+            <!--    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-brand-500 transition-colors">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xl font-bold text-white">ZTE</h4>
+                        <i class="fa-solid fa-server text-gray-500"></i>
+                    </div>
+                    <p class="text-sm text-brand-400 mb-3 font-mono">C300, C320, C600, C620, C650</p>
+                    <p class="text-gray-400 text-sm">Foco na estabilidade de sinal em redes GPON e XGS-PON. Otimização de perfis de tráfego e transição facilitada para redes 10G.</p>
+                </div>
+                <!-- Nokia -->
+            <!--    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-brand-500 transition-colors">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xl font-bold text-white">Nokia</h4>
+                        <i class="fa-solid fa-server text-gray-500"></i>
+                    </div>
+                    <p class="text-sm text-brand-400 mb-3 font-mono">7360 ISAM FX, 7250 IXR, 7750 SR</p>
+                    <p class="text-gray-400 text-sm">Monitoramento de alta disponibilidade e agregação de borda inteligente para infraestruturas robustas.</p>
+                </div>
+                <!-- Fiberhome -->
+             <!--   <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-brand-500 transition-colors">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xl font-bold text-white">Fiberhome</h4>
+                        <i class="fa-solid fa-server text-gray-500"></i>
+                    </div>
+                    <p class="text-sm text-brand-400 mb-3 font-mono">AN5516-01, AN5516-04, AN5516-06</p>
+                    <p class="text-gray-400 text-sm">Diagnóstico remoto de camadas físicas e aplicação de automação de scripts de configuração.</p>
+                </div>
+                <!-- Edgecore -->
+             <!--   <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-brand-500 transition-colors">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xl font-bold text-white">Edgecore</h4>
+                        <i class="fa-solid fa-network-wired text-gray-500"></i>
+                    </div>
+                    <p class="text-sm text-brand-400 mb-3 font-mono">Linhas desagregadas, Datacenter</p>
+                    <p class="text-gray-400 text-sm">Integração nativa com arquiteturas SDN, suporte robusto a ecCLOUD e SONiC.</p>
+                </div>
+                <!-- V-Sol / Genexis -->
+             <!--   <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-brand-500 transition-colors">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xl font-bold text-white">V-Sol / Genexis</h4>
+                        <i class="fa-solid fa-server text-gray-500"></i>
+                    </div>
+                    <p class="text-sm text-brand-400 mb-3 font-mono">MOLT-08P, SATURN, V1600D</p>
+                    <p class="text-gray-400 text-sm">Solução ideal para ISPs regionais: foco em baixo custo com altíssima visibilidade de rede.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Automação & Self-Healing -->
+    <section id="automacao" class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-start">
+                
+                <!-- Automação e ZTP -->
+                <div class="mb-12 lg:mb-0">
+                    <div class="inline-flex items-center justify-center p-3 bg-blue-100 text-blue-600 rounded-xl mb-6">
+                        <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Automação em Massa e ZTP</h3>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                        A eficiência operacional de um ISP é medida pela capacidade de escalar sem inflar a equipe técnica. O <span class="font-semibold text-gray-900">Vyom Config Service (VCS)</span> permite gestão remota de milhares de dispositivos.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <i class="fa-solid fa-check text-brand-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700"><strong>Atualizações em Massa:</strong> Firmware, políticas de QoS e segurança aplicadas simultaneamente com verificação de estabilidade.</span>
+                        </li>
+                        <li class="flex">
+                            <i class="fa-solid fa-check text-brand-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700"><strong>Zero-Touch Provisioning (ZTP):</strong> O VNE detecta a ONU recém-instalada (por SN/MAC), consulta o banco de dados e aplica VLANs, PPPoE/DHCP e bridge mode sem comandos manuais na OLT.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Self Healing -->
+                <div>
+                    <div class="inline-flex items-center justify-center p-3 bg-brand-100 text-brand-600 rounded-xl mb-6">
+                        <i class="fa-solid fa-heart-pulse text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Otimização e Auto-Cura (Self-healing)</h3>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                        A rede auto-regenerativa, monitorada 24/7. Algoritmos de IA identificam tendências de degradação (como fibra dobrada ou conector sujo) antes de falhas catastróficas.
+                    </p>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-5">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1"><div class="w-2 h-2 rounded-full bg-brand-500"></div></div>
+                            <div class="ml-4">
+                                <h5 class="text-md font-bold text-gray-900">Ajuste Dinâmico de QoS</h5>
+                                <p class="text-sm text-gray-600 mt-1">Priorização automática de tráfego sensível (VoIP, Gaming) em portas PON atingindo o limite de saturação.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1"><div class="w-2 h-2 rounded-full bg-red-500"></div></div>
+                            <div class="ml-4">
+                                <h5 class="text-md font-bold text-gray-900">Isolamento de ONUs "Rogue"</h5>
+                                <p class="text-sm text-gray-600 mt-1">Detecção imediata de terminais emitindo laser contínuo, isolando-os para proteger outros usuários do mesmo ramo (splitter).</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1"><div class="w-2 h-2 rounded-full bg-blue-500"></div></div>
+                            <div class="ml-4">
+                                <h5 class="text-md font-bold text-gray-900">Redirecionamento de Borda</h5>
+                                <p class="text-sm text-gray-600 mt-1">Comutação de tráfego em topologias de anel baseada na latência <em>real</em> percebida pelo usuário final.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- KPIs Mercado Brasileiro -->
+    <section id="kpis" class="py-16 md:py-24 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2">Impacto Real no ISP Brasileiro</h2>
+                <h3 class="text-3xl font-bold text-gray-900 sm:text-4xl mb-4">A Lógica Financeira do AIOps</h3>
+                <p class="text-gray-600 text-lg">
+                    Em parceria com integradoras como <strong>Think Technology</strong> e <strong>Route 66</strong>, adaptamos o VNE à realidade do Brasil, focando em redução drástica de OPEX. Cada visita técnica (truck roll) evitada é lucro direto.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- KPI 1 -->
+                <div class="bg-gray-50 p-6 rounded-2xl border-t-4 border-brand-500 shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 text-brand-100 group-hover:scale-110 transition-transform"><i class="fa-solid fa-truck text-6xl"></i></div>
+                    <div class="relative z-10">
+                        <div class="text-4xl font-extrabold text-brand-600 mb-2">62% <i class="fa-solid fa-arrow-down text-xl text-green-500"></i></div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">Truck Rolls</h4>
+                        <p class="text-sm text-gray-600">Menor custo com frotas, combustível e deslocamentos de técnicos de campo.</p>
+                    </div>
+                </div>
+                <!-- KPI 2 -->
+                <div class="bg-gray-50 p-6 rounded-2xl border-t-4 border-blue-500 shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 text-blue-100 group-hover:scale-110 transition-transform"><i class="fa-solid fa-headset text-6xl"></i></div>
+                    <div class="relative z-10">
+                        <div class="text-4xl font-extrabold text-blue-600 mb-2">35% <i class="fa-solid fa-arrow-up text-xl text-green-500"></i></div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">Aumento do FCR</h4>
+                        <p class="text-sm text-gray-600">Resolução no Primeiro Chamado. Central menos sobrecarregada e clientes satisfeitos.</p>
+                    </div>
+                </div>
+                <!-- KPI 3 -->
+                <div class="bg-gray-50 p-6 rounded-2xl border-t-4 border-purple-500 shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 text-purple-100 group-hover:scale-110 transition-transform"><i class="fa-solid fa-stopwatch text-6xl"></i></div>
+                    <div class="relative z-10">
+                        <div class="text-4xl font-extrabold text-purple-600 mb-2">30% <i class="fa-solid fa-arrow-down text-xl text-green-500"></i></div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">Redução no AHT</h4>
+                        <p class="text-sm text-gray-600">Tempo Médio de Atendimento cai com diagnósticos em segundos via dashboard.</p>
+                    </div>
+                </div>
+                <!-- KPI 4 -->
+                <div class="bg-gray-50 p-6 rounded-2xl border-t-4 border-yellow-500 shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 text-yellow-100 group-hover:scale-110 transition-transform"><i class="fa-solid fa-rocket text-6xl"></i></div>
+                    <div class="relative z-10">
+                        <div class="text-4xl font-extrabold text-yellow-500 mb-2">3x a 4x</div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">Velocidade Percebida</h4>
+                        <p class="text-sm text-gray-600">Otimização de rotas e Wi-Fi resulta em maior fidelidade e menor taxa de cancelamento (churn).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 text-center">
+                <p class="text-sm text-gray-500 italic">* Dados baseados em implementações reais de ISPs protegidos por NDA, adotando a modernização de redes com Inteligência Artificial.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AIVRA Section (Chatbot style) -->
+    <section id="aivra" class="py-16 md:py-24 bg-slate-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-slate-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+                
+                <!-- Text Content -->
+                <div class="lg:w-1/2 p-10 lg:p-16 flex flex-col justify-center relative">
+                    <!-- Background glow -->
+                    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+                        <div class="absolute -top-24 -left-24 w-64 h-64 bg-brand-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+                        <div class="absolute bottom-10 right-10 w-48 h-48 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center space-x-2 bg-slate-800/80 border border-slate-700 px-3 py-1 rounded-full text-brand-400 text-sm font-semibold mb-6">
+                            <i class="fa-solid fa-sparkles"></i> <span>Aprecomm Intelligent Virtual Response Assistant</span>
+                        </div>
+                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Conheça o AIVRA</h3>
+                        <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                            O futuro da gestão afasta-se de dashboards estáticos para interfaces conversacionais. O AIVRA ingere dados de faturamento, OLTs e histórico do NOC em um "Data Lake" unificado, quebrando os silos da sua operação.
+                        </p>
+                        <ul class="space-y-3 mb-8 text-gray-300">
+                            <li class="flex items-center"><i class="fa-solid fa-angle-right text-brand-500 mr-2"></i> Interface em linguagem natural.</li>
+                            <li class="flex items-center"><i class="fa-solid fa-angle-right text-brand-500 mr-2"></i> Insights imediatos sem necessidade de DBAs.</li>
+                            <li class="flex items-center"><i class="fa-solid fa-angle-right text-brand-500 mr-2"></i> Aprendizado contínuo focado no negócio.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chat UI Mockup -->
+                <div class="lg:w-1/2 bg-slate-800 p-6 lg:p-10 border-l border-slate-700 flex flex-col justify-end">
+                    
+                    <div class="bg-slate-900 rounded-2xl border border-slate-700 h-full flex flex-col shadow-inner">
+                        <!-- Chat Header -->
+                        <div class="border-b border-slate-700 p-4 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-brand-600 flex items-center justify-center text-white mr-3 shadow-lg shadow-brand-500/20">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-semibold">AIVRA IA</h5>
+                                <span class="text-xs text-brand-400 flex items-center"><span class="w-2 h-2 rounded-full bg-brand-500 mr-1 animate-pulse"></span> Online e analisando rede</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Chat Body -->
+                        <div class="p-4 flex-1 space-y-4 overflow-y-auto">
+                            <!-- User Message -->
+                            <div class="flex justify-end">
+                                <div class="bg-slate-700 text-gray-100 p-3 rounded-2xl rounded-tr-sm text-sm max-w-[85%] shadow-md border border-slate-600">
+                                    Qual é o perfil dos clientes que cancelaram o serviço na última semana?
+                                </div>
+                            </div>
+                            <!-- AI Message -->
+                            <div class="flex justify-start">
+                                <div class="w-8 h-8 rounded-full bg-brand-600 flex-shrink-0 flex items-center justify-center text-white text-xs mr-2 mt-1">
+                                    <i class="fa-solid fa-robot"></i>
+                                </div>
+                                <div class="bg-brand-900/50 text-gray-200 p-4 rounded-2xl rounded-tl-sm text-sm border border-brand-800 max-w-[90%] shadow-md">
+                                    <p class="mb-2">Analisei os dados do seu sistema de faturamento cruzados com a telemetria do VNE:</p>
+                                    <div class="bg-slate-900 p-3 rounded border border-slate-700 font-mono text-xs text-brand-300 mb-2">
+                                        > 85% dos cancelamentos ocorreram em assinantes conectados à <strong>OLT-04</strong>.<br>
+                                        > Causa detectada: Flutuações de latência acima de 50ms durante o horário nobre (19h-22h).
+                                    </div>
+                                    <p>Gostaria de abrir um chamado automatizado para balanceamento da porta PON afetada?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Chat Input -->
+                        <div class="p-4 border-t border-slate-700 bg-slate-800 rounded-b-2xl">
+                            <div class="relative">
+                                <input type="text" disabled placeholder="Digite sua consulta em linguagem natural..." class="w-full bg-slate-900 border border-slate-700 text-gray-300 rounded-full py-3 px-4 pr-12 focus:outline-none focus:border-brand-500 text-sm">
+                                <button disabled class="absolute right-2 top-1.5 w-9 h-9 rounded-full bg-brand-600 text-white flex items-center justify-center cursor-not-allowed opacity-80">
+                                    <i class="fa-solid fa-paper-plane text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Segurança e Conclusão -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <i class="fa-solid fa-shield-halved text-4xl text-gray-300 mb-4"></i>
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Segurança e Soberania de Dados (LGPD)</h3>
+            <p class="max-w-4xl mx-auto text-gray-600">
+                Soluções em nuvem exigem rigor extremo. O VNE possui conformidade nativa a padrões internacionais <strong>(GDPR e SOC 2)</strong>, aplicando criptografia em trânsito e repouso, e Gestão de Identidade e Acesso (IAM) granular, garantindo total alinhamento com a regulamentação brasileira.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 pt-16 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 border-b border-gray-800 pb-8">
+                <div class="flex items-center gap-2 mb-4 md:mb-0">
+                    <i class="fa-solid fa-network-wired text-brand-500 text-2xl"></i>
+                    <span class="font-bold text-xl text-white">Aprecomm <span class="text-brand-500">VNE</span></span>
+                </div>
+                <div class="flex space-x-6 text-gray-400">
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-sm">
+                <div>
+                    <h4 class="text-white font-semibold mb-4 uppercase tracking-wider text-xs">Recursos Educativos</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">Webinars Técnicos (Edgecore)</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">Whitepapers sobre QoE</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">Casos de Sucesso (ACT Fibernet)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 uppercase tracking-wider text-xs">Parceiros Oficiais Brasil</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Think Technology</li>
+                        <li>Route 66 Integrações</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 uppercase tracking-wider text-xs">Sobre a Evolução</h4>
+                    <p class="text-gray-400 leading-relaxed">
+                        Transformando OLTs em sensores inteligentes e permitindo que ISPs prosperem na era da maturidade operacional através da Inteligência Artificial.
+                    </p>
+                </div>
+            </div>
+            <div class="text-center text-gray-500 text-xs mt-12">
+                &copy; 2026 Aprecomm AIOps Analysis. Design baseado em diretrizes estratégicas.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão Voltar ao Topo -->
+    <a href="#" class="fixed bottom-6 right-6 bg-brand-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg shadow-brand-500/30 hover:bg-brand-700 transition-colors z-50">
+        <i class="fa-solid fa-arrow-up"></i>
+    </a>
+
+</body>
+</html>
