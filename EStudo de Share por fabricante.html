@@ -1,0 +1,396 @@
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard Analítico: Gerenciadores de OLT</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .chart-container { position: relative; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+            @media (min-width: 768px) { .chart-container { height: 400px; } }
+            .view-section { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
+            .view-section.active { display: block; opacity: 1; }
+            .nav-btn.active { border-bottom: 4px solid #1d4ed8; color: #1d4ed8; font-weight: 600; }
+            .nav-btn { border-bottom: 4px solid transparent; }
+            body { background-color: #f8fafc; }
+        </style>
+        <!-- Chosen Palette: Telecom Slate & Corporate Blue -->
+        <!-- Application Structure Plan: The application uses a tabbed dashboard structure to prevent information overload. Users can navigate between 'Visão Geral' (Executive Summary), 'Market Share' (Interactive Data), 'Ecossistema' (Vendor Details), and 'Tendências' (Future Outlook). This structure groups qualitative and quantitative data logically, allowing for non-linear exploration of the synthesized telecom report. -->
+        <!-- Visualization & Content Choices: 1. Stats Grid -> Goal: Inform -> Quick metrics presentation. 2. Doughnut Chart (Chart.js) -> Goal: Compare -> Shows global vs regional market share with a toggle interaction, justifying the visual comparison of vendor dominance. 3. Feature Cards -> Goal: Organize -> Details vendor software (NCE, NetNumen) using HTML/Tailwind grids. -> Library: Vanilla JS/Tailwind. -->
+        <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    </head>
+    <body class="text-slate-800 font-sans antialiased selection:bg-blue-200 selection:text-blue-900">
+
+        <nav class="bg-white shadow-md sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-2xl">📡</span>
+                        <span class="font-bold text-xl tracking-tight text-slate-900">OLT<span class="text-blue-600">Manager</span> Insights</span>
+                    </div>
+                    <div class="flex items-center sm:hidden">
+                        <button id="mobileMenuBtn" class="text-slate-500 hover:text-slate-700 focus:outline-none text-2xl">
+                            ☰
+                        </button>
+                    </div>
+                    <div class="hidden sm:flex sm:space-x-8" id="desktopNav">
+                        <button onclick="switchView('overview')" class="nav-btn active text-slate-600 hover:text-blue-600 px-3 py-2 text-sm transition-colors duration-200" data-target="overview">Visão Geral</button>
+                        <button onclick="switchView('marketshare')" class="nav-btn text-slate-600 hover:text-blue-600 px-3 py-2 text-sm transition-colors duration-200" data-target="marketshare">Market Share</button>
+                        <button onclick="switchView('vendors')" class="nav-btn text-slate-600 hover:text-blue-600 px-3 py-2 text-sm transition-colors duration-200" data-target="vendors">Ecossistema & Players</button>
+                        <button onclick="switchView('trends')" class="nav-btn text-slate-600 hover:text-blue-600 px-3 py-2 text-sm transition-colors duration-200" data-target="trends">Tendências Tecnológicas</button>
+                    </div>
+                </div>
+            </div>
+            <div id="mobileNav" class="sm:hidden hidden bg-white border-t border-slate-100 px-2 pt-2 pb-3 space-y-1 shadow-lg">
+                <button onclick="switchView('overview'); toggleMobileMenu()" class="block w-full text-left nav-btn active text-slate-600 hover:bg-slate-50 px-3 py-2 text-base font-medium rounded-md" data-target="overview">Visão Geral</button>
+                <button onclick="switchView('marketshare'); toggleMobileMenu()" class="block w-full text-left nav-btn text-slate-600 hover:bg-slate-50 px-3 py-2 text-base font-medium rounded-md" data-target="marketshare">Market Share</button>
+                <button onclick="switchView('vendors'); toggleMobileMenu()" class="block w-full text-left nav-btn text-slate-600 hover:bg-slate-50 px-3 py-2 text-base font-medium rounded-md" data-target="vendors">Ecossistema & Players</button>
+                <button onclick="switchView('trends'); toggleMobileMenu()" class="block w-full text-left nav-btn text-slate-600 hover:bg-slate-50 px-3 py-2 text-base font-medium rounded-md" data-target="trends">Tendências Tecnológicas</button>
+            </div>
+        </nav>
+
+        <main class="max-w-6xl mx-auto px-4 py-8">
+
+            <header class="mb-10 text-center sm:text-left">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">Relatório de Mercado: Sistemas Gerenciadores de OLT (2024-2025)</h1>
+                <p class="text-lg text-slate-600 max-w-3xl">Uma análise profunda sobre a adoção, distribuição de mercado e evolução tecnológica das plataformas de gerenciamento de terminais de linha óptica (OLTs), com foco no cenário global e na adaptação para o mercado latino-americano.</p>
+            </header>
+
+            <section id="overview" class="view-section active space-y-8">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center"><span class="text-blue-500 mr-2">ℹ️</span> Resumo Executivo</h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        A gestão de redes ópticas passivas (PON) tornou-se o calcanhar de aquiles e, simultaneamente, o maior diferencial competitivo para Provedores de Serviços de Internet (ISPs) e operadoras. O mercado de softwares gerenciadores de OLT está em transição de sistemas monolíticos (EMS/NMS tradicionais) para plataformas baseadas em Software-Defined Networking (SDN) e nuvem. Esta seção apresenta os principais indicadores desta transformação.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-blue-50 rounded-lg p-6 border border-blue-100 transform hover:-translate-y-1 transition-transform duration-200">
+                            <div class="text-blue-600 text-3xl mb-2">🌐</div>
+                            <h3 class="text-sm font-semibold text-blue-800 uppercase tracking-wider mb-1">Liderança Global</h3>
+                            <p class="text-3xl font-bold text-slate-900 mb-2">Huawei</p>
+                            <p class="text-sm text-slate-600">Mantém dominância com as soluções U2000 e a transição para o NCE-FAN.</p>
+                        </div>
+                        <div class="bg-emerald-50 rounded-lg p-6 border border-emerald-100 transform hover:-translate-y-1 transition-transform duration-200">
+                            <div class="text-emerald-600 text-3xl mb-2">📈</div>
+                            <h3 class="text-sm font-semibold text-emerald-800 uppercase tracking-wider mb-1">Crescimento de Adoção Multivendor</h3>
+                            <p class="text-3xl font-bold text-slate-900 mb-2">+ 45%</p>
+                            <p class="text-sm text-slate-600">Aumento na busca por softwares de terceiros (agnósticos) que gerenciem múltiplas marcas de OLT simultaneamente.</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-6 border border-purple-100 transform hover:-translate-y-1 transition-transform duration-200">
+                            <div class="text-purple-600 text-3xl mb-2">⚙️</div>
+                            <h3 class="text-sm font-semibold text-purple-800 uppercase tracking-wider mb-1">Principal Desafio</h3>
+                            <p class="text-xl font-bold text-slate-900 mb-2">Interoperabilidade</p>
+                            <p class="text-sm text-slate-600">O bloqueio de ONUs de terceiros (vendor lock-in) continua sendo a maior barreira de gestão.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="marketshare" class="view-section space-y-8">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800 flex items-center"><span class="text-blue-500 mr-2">📊</span> Distribuição de Market Share</h2>
+                            <p class="text-slate-500 text-sm mt-1">Comparativo de adoção de plataformas de gerência (Base Instalada Estimada 2024)</p>
+                        </div>
+                        <div class="bg-slate-100 p-1 rounded-lg inline-flex">
+                            <button onclick="updateChart('global')" id="btnGlobal" class="px-4 py-2 text-sm font-medium rounded-md shadow bg-white text-blue-700 transition-all">Mercado Global</button>
+                            <button onclick="updateChart('latam')" id="btnLatam" class="px-4 py-2 text-sm font-medium rounded-md text-slate-600 hover:text-slate-900 transition-all">Mercado LATAM / Brasil</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row items-center gap-8">
+                        <div class="w-full lg:w-2/3">
+                            <div class="chart-container">
+                                <canvas id="shareChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-1/3 bg-slate-50 p-6 rounded-lg border border-slate-200" id="chartContext">
+                            <h3 class="font-bold text-slate-800 mb-2 text-lg">Análise: Mercado Global</h3>
+                            <p class="text-slate-600 text-sm mb-4 leading-relaxed">No cenário global, as gigantes chinesas (Huawei, ZTE e FiberHome) dominam absolutamente o mercado, impulsionadas pelo enorme mercado interno asiático e fortes exportações para Europa e África. A Nokia mantém forte presença em operadoras Tier 1 nas Américas e Europa.</p>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-center"><span class="text-blue-600 font-bold mr-2">1.</span> Huawei (42%) - NCE/U2000</li>
+                                <li class="flex items-center"><span class="text-emerald-500 font-bold mr-2">2.</span> ZTE (28%) - NetNumen</li>
+                                <li class="flex items-center"><span class="text-indigo-500 font-bold mr-2">3.</span> Nokia (15%) - Altimplia/ISAM</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="vendors" class="view-section space-y-8">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2 flex items-center"><span class="text-blue-500 mr-2">🏢</span> Ecossistema de Soluções</h2>
+                    <p class="text-slate-600 mb-8">Nesta seção, exploramos as características e focos dos principais softwares de gerenciamento do mercado, divididos entre soluções de fabricantes nativos e plataformas agnósticas de terceiros.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <div class="border border-slate-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold text-slate-900">Huawei NCE-FAN / U2000</h3>
+                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded font-semibold">Líder de Mercado</span>
+                            </div>
+                            <p class="text-slate-600 text-sm mb-4">O U2000 foi o padrão da indústria por anos, agora sendo ativamente substituído pelo NCE-FAN (Network Cloud Engine), que traz arquitetura SDN, automação avançada e AI para predição de falhas.</p>
+                            <ul class="text-sm text-slate-500 space-y-1 list-inside">
+                                <li>▪️ <strong>Foco:</strong> Operadoras Tier 1 e 2, Grandes ISPs.</li>
+                                <li>▪️ <strong>Pró:</strong> Altamente robusto, telemetria em tempo real.</li>
+                                <li>▪️ <strong>Contra:</strong> Licenciamento complexo e custoso, peso em infraestrutura de hardware (servidores).</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-slate-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold text-slate-900">ZTE NetNumen U31</h3>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded font-semibold">Top 2 Global</span>
+                            </div>
+                            <p class="text-slate-600 text-sm mb-4">Sistema robusto de gerenciamento unificado (FCAPS) para os equipamentos da família ZXA10. Tem forte presença em ISPs que buscam alternativas com melhor custo-benefício em relação à Huawei.</p>
+                            <ul class="text-sm text-slate-500 space-y-1 list-inside">
+                                <li>▪️ <strong>Foco:</strong> ISPs de médio a grande porte.</li>
+                                <li>▪️ <strong>Pró:</strong> Excelente integração PON + IP na mesma plataforma.</li>
+                                <li>▪️ <strong>Contra:</strong> Curva de aprendizado da interface de usuário, atualizações complexas.</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-slate-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold text-slate-900">FiberHome UNM2000</h3>
+                                <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded font-semibold">Crescimento LATAM</span>
+                            </div>
+                            <p class="text-slate-600 text-sm mb-4">O UNM2000 substituiu o antigo ANM2000. É uma plataforma que ganhou massiva adesão na América Latina devido à agressividade comercial das caixas FiberHome nos últimos 5 anos.</p>
+                            <ul class="text-sm text-slate-500 space-y-1 list-inside">
+                                <li>▪️ <strong>Foco:</strong> ISPs regionais e mercados emergentes.</li>
+                                <li>▪️ <strong>Pró:</strong> Interface mais amigável que a geração anterior, custo acessível.</li>
+                                <li>▪️ <strong>Contra:</strong> Limitada interoperabilidade real com ONUs de terceiros (sem unlock).</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-blue-200 bg-blue-50 rounded-lg p-6 hover:shadow-md transition-shadow relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-2 text-4xl opacity-10">🇧🇷</div>
+                            <div class="flex justify-between items-start mb-4 relative z-10">
+                                <h3 class="text-xl font-bold text-slate-900">Datacom DmView</h3>
+                                <span class="bg-slate-800 text-white text-xs px-2 py-1 rounded font-semibold">Força Nacional</span>
+                            </div>
+                            <p class="text-slate-600 text-sm mb-4 relative z-10">Plataforma desenvolvida no Brasil, totalmente em português. Destaca-se por uma interface extremamente visual, foco em topologia e facilidade de configuração (Zero Touch Provisioning).</p>
+                            <ul class="text-sm text-slate-500 space-y-1 list-inside relative z-10">
+                                <li>▪️ <strong>Foco:</strong> Provedores brasileiros, mercado corporativo.</li>
+                                <li>▪️ <strong>Pró:</strong> Suporte local direto de fábrica, UI intuitiva, gestão unificada de switches e OLTs.</li>
+                                <li>▪️ <strong>Contra:</strong> Focado no hardware Datacom, menor penetração fora do Brasil.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-8 p-6 bg-slate-900 text-white rounded-lg">
+                        <h3 class="text-lg font-bold mb-3 flex items-center">💡 A Ascensão dos Gerenciadores "Agnósticos"</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                            Devido ao problema crônico de <em>vendor lock-in</em> (onde uma OLT Huawei exige licenças para aceitar ONUs de outras marcas, por exemplo), há um crescimento acelerado de plataformas de gerenciamento de terceiros integradas via API, SSH e SNMP.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-800 border border-slate-700 rounded-full text-xs font-mono">Made4IT / Made4Graph</span>
+                            <span class="px-3 py-1 bg-slate-800 border border-slate-700 rounded-full text-xs font-mono">Parks (Gerência Multivendor)</span>
+                            <span class="px-3 py-1 bg-slate-800 border border-slate-700 rounded-full text-xs font-mono">Sistemas ERP Integrados (IXC, MK)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="trends" class="view-section space-y-8">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center"><span class="text-blue-500 mr-2">🚀</span> Tendências e Futuro da Gestão PON</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="group border-l-4 border-blue-500 pl-4 hover:bg-slate-50 p-3 transition-colors rounded-r-lg">
+                            <h3 class="text-lg font-bold text-slate-800 mb-1 flex items-center justify-between cursor-pointer" onclick="toggleTrend('trend1')">
+                                1. Cloud-Native & SaaS (Software as a Service)
+                                <span class="text-slate-400 group-hover:text-blue-500 transition-colors">▼</span>
+                            </h3>
+                            <div id="trend1" class="text-slate-600 text-sm mt-2 hidden">
+                                Provedores não querem mais manter servidores físicos locais parrudas apenas para rodar o gerenciador da OLT. A migração para versões em nuvem (instâncias AWS, Azure ou nuvens privativas dos fabricantes) reduz o CapEx e simplifica as atualizações de versão do software.
+                            </div>
+                        </div>
+
+                        <div class="group border-l-4 border-emerald-500 pl-4 hover:bg-slate-50 p-3 transition-colors rounded-r-lg">
+                            <h3 class="text-lg font-bold text-slate-800 mb-1 flex items-center justify-between cursor-pointer" onclick="toggleTrend('trend2')">
+                                2. Telemetria e Inteligência Artificial (AI-driven Operations)
+                                <span class="text-slate-400 group-hover:text-emerald-500 transition-colors">▼</span>
+                            </h3>
+                            <div id="trend2" class="text-slate-600 text-sm mt-2 hidden">
+                                O SNMP tradicional, baseado em polling demorado (ex: a cada 5 minutos), está dando lugar à Telemetria via Streaming (gRPC/Netconf). Os gerenciadores modernos utilizam Machine Learning para analisar curvas de atenuação óptica e prever rompimentos de fibra antes que o cliente ligue para o suporte.
+                            </div>
+                        </div>
+
+                        <div class="group border-l-4 border-purple-500 pl-4 hover:bg-slate-50 p-3 transition-colors rounded-r-lg">
+                            <h3 class="text-lg font-bold text-slate-800 mb-1 flex items-center justify-between cursor-pointer" onclick="toggleTrend('trend3')">
+                                3. Gerência via TR-069 e TR-369 (USP)
+                                <span class="text-slate-400 group-hover:text-purple-500 transition-colors">▼</span>
+                            </h3>
+                            <div id="trend3" class="text-slate-600 text-sm mt-2 hidden">
+                                Enquanto o gerenciador da OLT cuida do equipamento central e da porta PON, a gerência da experiência do usuário final (o Wi-Fi dentro da casa do cliente) está migrando para plataformas ACS via protocolos TR-069 e o novo TR-369 (User Services Platform). Gerenciadores de OLT estão começando a embutir ou se integrar profundamente com essas plataformas ACS.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="bg-slate-900 text-slate-400 py-8 text-center mt-12">
+            <p class="text-sm">© 2024-2025 Market Insights - Telecomunicações & Redes Ópticas.</p>
+            <p class="text-xs mt-2">Dados sintetizados para demonstração estrutural. Aplicação de visão única (SPA).</p>
+        </footer>
+
+        <script>
+            // Data Configuration for Chart.js
+            const chartData = {
+                global: {
+                    title: 'Análise: Mercado Global',
+                    desc: 'No cenário global, as gigantes chinesas (Huawei, ZTE e FiberHome) dominam absolutamente o mercado, impulsionadas pelo enorme mercado interno asiático e fortes exportações para Europa e África. A Nokia mantém forte presença em operadoras Tier 1 nas Américas e Europa.',
+                    labels: ['Huawei (NCE/U2000)', 'ZTE (NetNumen)', 'Nokia (Altimplia)', 'FiberHome (UNM2000)', 'Outros (Calix, Adtran, etc)'],
+                    data: [42, 28, 15, 10, 5],
+                    colors: ['#2563eb', '#10b981', '#6366f1', '#8b5cf6', '#cbd5e1']
+                },
+                latam: {
+                    title: 'Análise: Mercado LATAM / Brasil',
+                    desc: 'No Brasil e na América Latina, a pulverização dos provedores regionais (ISPs) muda a dinâmica. Embora a Huawei ainda lidere, equipamentos FiberHome, Datacom e ZTE possuem fatias massivas. Intelbras e V-Sol ganham terreno rapidamente em provedores menores pelo custo e ausência de licenças restritivas.',
+                    labels: ['Huawei', 'ZTE', 'FiberHome', 'Datacom (DmView)', 'Intelbras / V-Sol / Parks / Outros'],
+                    data: [35, 25, 20, 12, 8],
+                    colors: ['#2563eb', '#10b981', '#8b5cf6', '#1e293b', '#f59e0b']
+                }
+            };
+
+            // Initialize Chart
+            let myChart = null;
+
+            function initChart() {
+                const ctx = document.getElementById('shareChart').getContext('2d');
+                myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: chartData.global.labels,
+                        datasets: [{
+                            data: chartData.global.data,
+                            backgroundColor: chartData.global.colors,
+                            borderWidth: 2,
+                            borderColor: '#ffffff',
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true,
+                                    font: { family: 'sans-serif' }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return ' ' + context.label + ': ' + context.parsed + '% do mercado';
+                                    }
+                                },
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                padding: 12,
+                                titleFont: { size: 14 },
+                                bodyFont: { size: 13 }
+                            }
+                        },
+                        cutout: '65%',
+                        animation: { animateScale: true, animateRotate: true }
+                    }
+                });
+            }
+
+            // Update Chart based on button click
+            function updateChart(datasetName) {
+                const data = chartData[datasetName];
+                
+                // Update Chart Instance
+                myChart.data.labels = data.labels;
+                myChart.data.datasets[0].data = data.data;
+                myChart.data.datasets[0].backgroundColor = data.colors;
+                myChart.update();
+
+                // Update UI Buttons
+                document.getElementById('btnGlobal').className = datasetName === 'global' ? 
+                    'px-4 py-2 text-sm font-medium rounded-md shadow bg-white text-blue-700 transition-all' : 
+                    'px-4 py-2 text-sm font-medium rounded-md text-slate-600 hover:text-slate-900 transition-all';
+                
+                document.getElementById('btnLatam').className = datasetName === 'latam' ? 
+                    'px-4 py-2 text-sm font-medium rounded-md shadow bg-white text-blue-700 transition-all' : 
+                    'px-4 py-2 text-sm font-medium rounded-md text-slate-600 hover:text-slate-900 transition-all';
+
+                // Update Context Text
+                const contextDiv = document.getElementById('chartContext');
+                contextDiv.style.opacity = 0;
+                setTimeout(() => {
+                    contextDiv.innerHTML = `
+                        <h3 class="font-bold text-slate-800 mb-2 text-lg">${data.title}</h3>
+                        <p class="text-slate-600 text-sm mb-4 leading-relaxed">${data.desc}</p>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-center"><span class="font-bold mr-2" style="color:${data.colors[0]}">1.</span> ${data.labels[0]} (${data.data[0]}%)</li>
+                            <li class="flex items-center"><span class="font-bold mr-2" style="color:${data.colors[1]}">2.</span> ${data.labels[1]} (${data.data[1]}%)</li>
+                            <li class="flex items-center"><span class="font-bold mr-2" style="color:${data.colors[2]}">3.</span> ${data.labels[2]} (${data.data[2]}%)</li>
+                        </ul>
+                    `;
+                    contextDiv.style.opacity = 1;
+                    contextDiv.style.transition = "opacity 0.3s";
+                }, 300);
+            }
+
+            // Navigation Logic
+            function switchView(targetId) {
+                // Hide all sections
+                document.querySelectorAll('.view-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                // Show target section
+                document.getElementById(targetId).classList.add('active');
+
+                // Update nav buttons states
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if(btn.dataset.target === targetId) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                // If switching to market share, ensure chart is rendered correctly
+                if(targetId === 'marketshare' && myChart) {
+                    myChart.resize();
+                }
+            }
+
+            // Mobile Menu Toggle
+            function toggleMobileMenu() {
+                const menu = document.getElementById('mobileNav');
+                menu.classList.toggle('hidden');
+            }
+
+            document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+            // Accordion Logic for Trends
+            function toggleTrend(id) {
+                const el = document.getElementById(id);
+                if (el.classList.contains('hidden')) {
+                    el.classList.remove('hidden');
+                    el.classList.add('block');
+                } else {
+                    el.classList.add('hidden');
+                    el.classList.remove('block');
+                }
+            }
+
+            // Initialize on load
+            window.onload = () => {
+                initChart();
+            };
+        </script>
+    </body>
+    </html>

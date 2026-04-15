@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Técnica Exaustiva: Made4OLT</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-200">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="network" class="w-8 h-8 text-blue-600"></i>
+                    <span class="font-bold text-xl tracking-tight text-slate-900">Tech<span class="text-blue-600">Review</span></span>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#arquitetura" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition">Arquitetura</a>
+                    <a href="#operacao" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition">Operação</a>
+                    <a href="#inteligencia" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition">Inteligência (IA)</a>
+                    <a href="#treinamento" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition">Made4Study</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-slate-900 overflow-hidden pt-16 pb-24">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%231e293b\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-indigo-900/90"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 text-blue-200 text-sm font-semibold mb-6 border border-blue-400/30">
+                <i data-lucide="sparkles" class="w-4 h-4"></i> Relatório Técnico Especializado
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6">
+                Ecossistema <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Made4OLT</span>
+            </h1>
+            <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-300 leading-relaxed mb-10">
+                Gestão Multivendor, Automação e Inteligência Operacional para ISPs. Uma quebra de paradigma contra o <i>vendor lock-in</i> na expansão de redes FTTH na América Latina.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-sm font-medium">
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg text-white flex items-center gap-2 border border-white/20">
+                    <i data-lucide="server" class="w-5 h-5 text-blue-400"></i> Huawei, ZTE, Datacom, Fiberhome, Dasan
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg text-white flex items-center gap-2 border border-white/20">
+                    <i data-lucide="trending-down" class="w-5 h-5 text-emerald-400"></i> Redução de TCO e MTTR
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Context & Fundamentals -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
+        
+        <!-- Highlights Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="unlock" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">Fim do Lock-in</h3>
+                <p class="text-slate-600 text-sm">Abstração da CLI permite operar OLTs de múltiplos fabricantes em uma interface única.</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="zap" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">Operação Ágil</h3>
+                <p class="text-slate-600 text-sm">Automatização do provisionamento e redução drástica do Tempo Médio de Reparo (MTTR).</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="bot" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">IA & Chatbots</h3>
+                <p class="text-slate-600 text-sm">Integração via API com LLMs para autodiagnóstico avançado e suporte técnico.</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">Governança</h3>
+                <p class="text-slate-600 text-sm">Controle de acessos granular (RBAC) e logs de auditoria detalhados para segurança da rede.</p>
+            </div>
+        </div>
+
+        <div class="prose prose-slate max-w-none mb-16">
+            <p class="text-lg text-slate-600 leading-relaxed text-center max-w-4xl mx-auto">
+                No Brasil, os ISPs desempenham um papel vital na inclusão digital, possuindo alta capilaridade. A evolução das redes passivas (PON) trouxe o desafio da complexidade de gerenciar diferentes Interfaces de Linha de Comando (CLI). O Made4OLT atua como um tradutor técnico, convertendo cliques em comandos precisos, garantindo eficiência em escala.
+            </p>
+        </div>
+
+        <!-- Section 1: Implantação e Infraestrutura -->
+        <section id="arquitetura" class="mb-20 scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <i data-lucide="hard-drive" class="w-8 h-8 text-blue-600"></i>
+                <h2 class="text-3xl font-bold text-slate-800">Arquitetura & Implantação</h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4 text-slate-700">Modelos de Execução</h3>
+                    <div class="space-y-4">
+                        <div class="p-5 bg-white border border-slate-200 rounded-xl flex gap-4 hover:border-blue-300 transition">
+                            <div class="mt-1"><i data-lucide="server-crash" class="w-6 h-6 text-slate-400"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">On-Premise</h4>
+                                <p class="text-sm text-slate-600">Hardware físico/virtual local. Controle total dos dados e latência mínima com as OLTs.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl flex gap-4 hover:border-blue-300 transition relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 text-blue-100 opacity-50"><i data-lucide="cloud" class="w-24 h-24"></i></div>
+                            <div class="mt-1 relative z-10"><i data-lucide="cloud" class="w-6 h-6 text-blue-600"></i></div>
+                            <div class="relative z-10">
+                                <h4 class="font-bold text-slate-800">Cloud (Recomendado)</h4>
+                                <p class="text-sm text-slate-600">Alta escalabilidade, acesso remoto facilitado e zero manutenção de hardware local.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 bg-white border border-slate-200 rounded-xl flex gap-4 hover:border-blue-300 transition">
+                            <div class="mt-1"><i data-lucide="layers" class="w-6 h-6 text-slate-400"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Híbrido</h4>
+                                <p class="text-sm text-slate-600">Equilíbrio entre segurança de dados críticos locais e mobilidade para acesso externo em nuvem.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart: Hardware Requirements -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-center mb-4 text-slate-700">Requisitos de Hardware (Debian 11)</h3>
+                    <div class="relative h-64">
+                        <canvas id="hardwareChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-slate-500 mt-4">*Uso obrigatório de SSD/NVMe devido ao alto I/O do Redis e logs de TRAP.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-slate-200 my-16">
+
+        <!-- Section 2: Protocolos e Fabricantes -->
+        <section id="protocolos" class="mb-20 scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <i data-lucide="cable" class="w-8 h-8 text-indigo-600"></i>
+                <h2 class="text-3xl font-bold text-slate-800">Comunicação e Fabricantes</h2>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Protocolos -->
+                <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-800 text-white p-5 rounded-xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="activity" class="w-5 h-5 text-green-400"></i>
+                            <h4 class="font-bold">SNMP</h4>
+                        </div>
+                        <p class="text-sm text-slate-300">Coleta proativa de performance. Precisão aprimorada em OLTs Huawei para métricas de chassi/PON.</p>
+                    </div>
+                    <div class="bg-slate-800 text-white p-5 rounded-xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="bell-ring" class="w-5 h-5 text-amber-400"></i>
+                            <h4 class="font-bold">TRAP</h4>
+                        </div>
+                        <p class="text-sm text-slate-300">Notificações em tempo real. Identifica eventos críticos instantâneos como <i>Dying Gasp</i> (queda de energia).</p>
+                    </div>
+                    <div class="bg-slate-800 text-white p-5 rounded-xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="terminal" class="w-5 h-5 text-blue-400"></i>
+                            <h4 class="font-bold">SSH / CLI</h4>
+                        </div>
+                        <p class="text-sm text-slate-300">Escrita de configurações. Envio seguro de comandos processados com Regex para garantir a aplicação.</p>
+                    </div>
+                    <div class="bg-slate-800 text-white p-5 rounded-xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="webhook" class="w-5 h-5 text-purple-400"></i>
+                            <h4 class="font-bold">REST API</h4>
+                        </div>
+                        <p class="text-sm text-slate-300">Integração nativa com ERPs e CRMs do ISP para automação de vendas até a ativação.</p>
+                    </div>
+                </div>
+
+                <!-- Tabela de Homologação -->
+                <div class="lg:col-span-7 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+                    <div class="bg-slate-50 border-b border-slate-200 p-4">
+                        <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500"></i> Matriz de Homologação Multivendor
+                        </h3>
+                    </div>
+                    <div class="overflow-x-auto flex-grow">
+                        <table class="w-full text-sm text-left text-slate-600">
+                            <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                                <tr>
+                                    <th class="px-6 py-3">Fabricante</th>
+                                    <th class="px-6 py-3">Modelos Homologados</th>
+                                    <th class="px-6 py-3">Notas Técnicas / Firmware</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Huawei</td>
+                                    <td class="px-6 py-4">MA5800-X2, X7, X15, X17</td>
+                                    <td class="px-6 py-4 text-xs">Suporte V100R023C11, V100R022C12. Coleta via Regex aprimorada. Suporte a Line/DBA Profiles.</td>
+                                </tr>
+                                <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">ZTE</td>
+                                    <td class="px-6 py-4">Linha 6xx e outras</td>
+                                    <td class="px-6 py-4 text-xs">Correções recentes no fluxo de provisionamento e registro de equipamentos.</td>
+                                </tr>
+                                <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Fiberhome</td>
+                                    <td class="px-6 py-4">Modelos Diversos</td>
+                                    <td class="px-6 py-4 text-xs">Gestão avançada de WAN/VEIP direto no sistema, TRAP e visibilidade de firmware de ONUs.</td>
+                                </tr>
+                                <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Datacom</td>
+                                    <td class="px-6 py-4">Modelos Diversos</td>
+                                    <td class="px-6 py-4 text-xs">Integração completa de provisionamento e telemetria de sinal óptico.</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Dasan</td>
+                                    <td class="px-6 py-4">Modelos Recentes</td>
+                                    <td class="px-6 py-4 text-xs">Recentemente adicionado aos módulos de visualização e monitoramento da plataforma.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-slate-200 my-16">
+
+        <!-- Section 3: Operação e Automação -->
+        <section id="operacao" class="mb-20 scroll-mt-24">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-semibold tracking-wider uppercase text-sm">Eficiência em Escala</span>
+                <h2 class="text-3xl font-bold text-slate-800 mt-2">Funcionalidades Operacionais & Automação</h2>
+                <p class="text-slate-600 mt-4 max-w-2xl mx-auto">Da ativação do cliente ao diagnóstico de campo, o sistema minimiza o erro humano através de rotinas lógicas padronizadas.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Ciclo de Provisionamento -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -z-0"></div>
+                    <div class="relative z-10">
+                        <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="play-circle" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Provisionamento Inteligente</h3>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Templates:</b> Engenharia define, técnicos apenas aplicam.</li>
+                            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Wizard de Conexão:</b> Validações prévias contra falhas.</li>
+                            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Gestão L3 (WAN/VEIP):</b> Configuração nativa sem abrir a GUI da ONU.</li>
+                            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Scripts Customizados:</b> Flexibilidade para cenários fora do padrão.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Telemetria -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="line-chart" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Telemetria & Diagnóstico</h3>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Histórico Tx/Rx:</b> Gráficos de degradação temporal.</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>LastDownCase:</b> Leitura exata do motivo da desconexão (energia, fibra rompida). Evita <i>truck rolls</i> cegos.</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Tráfego Real:</b> Identificação rápida de gargalos de banda por cliente.</li>
+                    </ul>
+                </div>
+
+                <!-- Automação Avançada -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-blue-500 shadow-md relative">
+                    <div class="absolute -top-3 -right-3 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                        Versão 2.0+
+                    </div>
+                    <div class="w-10 h-10 bg-blue-600 text-white rounded-lg flex items-center justify-center mb-4 shadow-sm">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Automação Avançada</h3>
+                    <ul class="space-y-2 text-sm text-slate-600 mb-4">
+                        <li class="flex items-start gap-2"><i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-0.5 shrink-0"></i> <b>Bulk Configuration:</b> Comandos em massa para senhas, VLANs e patches de segurança.</li>
+                        <li class="flex items-start gap-2"><i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-0.5 shrink-0"></i> <b>Autoprovisionamento:</b> Reconhecimento automático de ONUs conectadas + Configuração baseada no plano do ERP.</li>
+                    </ul>
+                    <div class="bg-slate-50 p-3 rounded text-xs border border-slate-200">
+                        <span class="font-bold text-slate-700">Destaque v1.9.6:</span> O novo <i>Tag System</i> permite organizar redes gigantescas, facilitando campanhas massivas de atualização de firmware.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Graphic Representation of Efficiency -->
+            <div class="mt-12 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-6 text-center">Impacto Operacional Estimado (Redução de Esforço)</h3>
+                <div class="relative h-64 md:w-3/4 mx-auto">
+                    <canvas id="efficiencyChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-slate-200 my-16">
+
+        <!-- Section 4: IA & Chatbots -->
+        <section id="inteligencia" class="mb-20 scroll-mt-24">
+            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-xl">
+                <!-- Decorative background elements -->
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+                <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+
+                <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">A Fronteira Tecnológica</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-extrabold mb-6">Integração com Inteligência Artificial e Chatbots Multimodais</h2>
+                        <p class="text-indigo-200 text-lg mb-6 leading-relaxed">
+                            As APIs do Made4OLT permitem que os ISPs construam assistentes inteligentes revolucionários, conectando a camada de rede a modelos de linguagem avançados (Llama 4, ChatGPT) via plataformas como Make.com.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex gap-4">
+                                <div class="bg-white/10 p-3 rounded-xl shrink-0"><i data-lucide="message-square-dashed" class="w-6 h-6 text-blue-300"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">Suporte N1 Automatizado</h4>
+                                    <p class="text-sm text-indigo-200">Bots consultam a OLT ao vivo. Se a ONU estiver em -28dBm, o bot agenda visita técnica automaticamente, enviando link de localização da CTO.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="bg-white/10 p-3 rounded-xl shrink-0"><i data-lucide="smartphone" class="w-6 h-6 text-green-300"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">NOC de Campo via Telegram/WhatsApp</h4>
+                                    <p class="text-sm text-indigo-200">Técnicos enviam o serial da ONU no chat. O sistema provisiona e retorna o status em segundos, liberando os operadores do NOC.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="bg-white/10 p-3 rounded-xl shrink-0"><i data-lucide="camera" class="w-6 h-6 text-purple-300"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">Análise Multimodal (Llama 4)</h4>
+                                    <p class="text-sm text-indigo-200">Bots analisam fotos da instalação física enviadas pelo técnico, cruzando a organização da fibra com os dados técnicos lidos pelo software.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hidden md:block">
+                        <div class="glass-card rounded-2xl p-6 relative">
+                            <div class="flex items-center gap-3 mb-4 border-b border-white/20 pb-4">
+                                <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center"><i data-lucide="bot" class="text-white"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800">Bot do Provedor</h4>
+                                    <p class="text-xs text-slate-500">Online via Make.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4 text-sm text-slate-800">
+                                <!-- Chat mock -->
+                                <div class="bg-blue-50 text-blue-900 p-3 rounded-lg rounded-tl-none inline-block max-w-[80%]">
+                                    Cliente: Minha internet está caindo muito desde ontem.
+                                </div>
+                                <div class="text-right">
+                                    <div class="bg-white p-3 rounded-lg rounded-tr-none inline-block max-w-[80%] text-left shadow-sm">
+                                        <div class="text-xs text-slate-400 mb-1 flex items-center gap-1"><i data-lucide="loader-2" class="w-3 h-3 animate-spin"></i> Consultando Made4OLT API...</div>
+                                        Bot: Verifiquei aqui na central que o cabo de fibra ótica na sua casa sofreu uma alteração brusca de sinal (Sinal atual: -29dBm). Pode ter sido dobrado. Gostaria de agendar um técnico para hoje à tarde?
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Made4Study & Comunidade -->
+        <section id="treinamento" class="mb-20 scroll-mt-24">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="graduation-cap" class="w-8 h-8 text-amber-500"></i>
+                        <h2 class="text-3xl font-bold text-slate-800">Ecossistema Made4Study</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6">
+                        A tecnologia só entrega resultados com equipes capacitadas. A estrutura EAD oferece laboratórios práticos multivendor para técnicos, engenheiros e gestores através de assinatura anual.
+                    </p>
+                    
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <table class="w-full text-sm text-left text-slate-600">
+                            <thead class="text-xs text-slate-700 bg-slate-50">
+                                <tr>
+                                    <th class="px-6 py-4 font-bold">Treinamento / Certificação</th>
+                                    <th class="px-6 py-4 font-bold">Foco Técnico</th>
+                                    <th class="px-6 py-4 font-bold">Público-Alvo</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2"><i data-lucide="globe" class="w-4 h-4 text-blue-500"></i> BGP em Huawei/Juniper</td>
+                                    <td class="px-6 py-4">Borda, Trânsito IP, IXP</td>
+                                    <td class="px-6 py-4"><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Engenheiros NOC</span></td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2"><i data-lucide="route" class="w-4 h-4 text-emerald-500"></i> MPLS em Huawei</td>
+                                    <td class="px-6 py-4">Transporte, VPNs L2/L3</td>
+                                    <td class="px-6 py-4"><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Especialistas</span></td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2"><i data-lucide="eye" class="w-4 h-4 text-purple-500"></i> Zabbix Completo</td>
+                                    <td class="px-6 py-4">Monitoramento e Visibilidade</td>
+                                    <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Operação NOC</span></td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2"><i data-lucide="network" class="w-4 h-4 text-indigo-500"></i> Made4OLT Premium</td>
+                                    <td class="px-6 py-4">Customização e Operação</td>
+                                    <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Equipes do ISP</span></td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2"><i data-lucide="arrow-left-right" class="w-4 h-4 text-amber-500"></i> Switching & Routing</td>
+                                    <td class="px-6 py-4">Fundamentos Multivendor</td>
+                                    <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Técnicos Base</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Community & Social -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="youtube" class="w-8 h-8 text-red-600"></i>
+                        <h2 class="text-2xl font-bold text-slate-800">Comunidade e Conhecimento</h2>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                            <h4 class="font-bold text-slate-800 mb-2">Tópicos Quentes na Comunidade</h4>
+                            <ul class="space-y-3 text-sm text-slate-600">
+                                <li class="pb-2 border-b border-slate-100">
+                                    <strong class="text-slate-800">Configuração MC-LAG (Huawei):</strong> Redundância crítica de portas e chassis (E-Trunk, LACP, BFD) para backbones de alta disponibilidade.
+                                </li>
+                                <li class="pb-2 border-b border-slate-100">
+                                    <strong class="text-slate-800">Mitigação de DDoS (Botnet Kimwolf):</strong> Uso de Made4Flow integrado à gestão de rede para estancar ataques de dispositivos IoT infectados na rede interna.
+                                </li>
+                                <li>
+                                    <strong class="text-slate-800">Virtualização Avançada:</strong> Casos de redução de custos implementando instâncias críticas em clusters Proxmox corporativos.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+                            <div class="flex gap-3">
+                                <i data-lucide="quote" class="text-emerald-500 w-8 h-8 opacity-50 shrink-0"></i>
+                                <div>
+                                    <p class="text-sm font-medium text-emerald-900 mb-2">
+                                        "Reduzimos o caos em nossos servidores e os custos operacionais despencaram com a automação."
+                                    </p>
+                                    <p class="text-xs text-emerald-700 font-bold">— Case de Sucesso: ISP Pontonet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Segurança e Conclusão -->
+        <section class="mb-20">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-8 md:p-12">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="w-16 h-16 bg-slate-100 text-slate-800 rounded-2xl flex items-center justify-center shadow-inner">
+                            <i data-lucide="shield" class="w-8 h-8"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-center text-slate-800 mb-8">Segurança, Auditoria e Conclusão</h2>
+                    
+                    <div class="grid md:grid-cols-3 gap-8 mb-10">
+                        <div class="text-center">
+                            <i data-lucide="user-cog" class="w-6 h-6 mx-auto text-blue-600 mb-2"></i>
+                            <h4 class="font-bold text-slate-800">Níveis de Acesso (RBAC)</h4>
+                            <p class="text-sm text-slate-600 mt-2">Visão segmentada. N1 vê sinal, Engenharia modifica VLANs. Menos riscos acidentais.</p>
+                        </div>
+                        <div class="text-center">
+                            <i data-lucide="file-search" class="w-6 h-6 mx-auto text-purple-600 mb-2"></i>
+                            <h4 class="font-bold text-slate-800">Logs de Auditoria</h4>
+                            <p class="text-sm text-slate-600 mt-2">Registro de 'quem fez o quê e quando'. Crucial para investigar RCA (Root Cause Analysis).</p>
+                        </div>
+                        <div class="text-center">
+                            <i data-lucide="fingerprint" class="w-6 h-6 mx-auto text-emerald-600 mb-2"></i>
+                            <h4 class="font-bold text-slate-800">Rastreabilidade Total</h4>
+                            <p class="text-sm text-slate-600 mt-2">Transparência nas configurações, alinhando-se a políticas de governança de TI corporativa.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 text-slate-700 text-sm leading-relaxed text-justify">
+                        <p class="mb-4">
+                            A análise consolida o <strong>Made4OLT</strong> como uma plataforma de altíssima maturidade (evidenciado pela v2.0.0 com mapas e APIs nativas). Ao remover a fricção da sintaxe proprietária através de uma camada de abstração multivendor eficaz, o software resolve uma dor econômica vital para provedores LATAM: a liberdade comercial de compra de hardware aliada à operação otimizada.
+                        </p>
+                        <p>
+                            A sinergia entre o controle operacional contínuo (telemetria proativa), o autoprovisionamento em escala, a capacidade de integrar-se ao futuro (IA Generativa) e o robusto suporte educacional do <strong>Made4Study</strong>, formam um ecossistema definitivo. ISPs que adotam essa arquitetura garantem não apenas a mitigação de "truck rolls" e a diminuição drástica do TCO, mas pavimentam sua infraestrutura para uma gestão baseada em dados, preparada para o crescimento escalável na era digital.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 py-12 text-center text-slate-400">
+        <div class="flex justify-center items-center gap-2 mb-4">
+            <i data-lucide="network" class="w-6 h-6 text-slate-500"></i>
+            <span class="font-bold text-slate-300 tracking-tight">Tech<span class="text-slate-500">Review</span></span>
+        </div>
+        <p class="text-sm">Relatório analítico baseado nos fundamentos técnicos e mercadológicos do sistema Made4OLT.</p>
+        <p class="text-xs mt-2 text-slate-600">Desenvolvido para profissionais de rede e gestores de tecnologia.</p>
+    </footer>
+
+    <!-- Initialization Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // ---------------------------------------------------------
+        // Chart 1: Hardware Requirements
+        // ---------------------------------------------------------
+        const hwCtx = document.getElementById('hardwareChart').getContext('2d');
+        const hardwareChart = new Chart(hwCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Até 2 OLTs', 'Médio Porte (Est.)', 'Grande Porte (Est.)'],
+                datasets: [
+                    {
+                        label: 'vCPU (Cores)',
+                        data: [6, 12, 24],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)', // blue-500
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Memória RAM (GB)',
+                        data: [8, 16, 32],
+                        backgroundColor: 'rgba(139, 92, 246, 0.8)', // purple-500
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Armazenamento SSD (GB x 10)', // scaled for visual balance
+                        data: [20, 50, 100], 
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)', // emerald-500
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8 } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                let value = context.parsed.y;
+                                if (label.includes('SSD')) {
+                                    value = value * 10; // De-scale for tooltip
+                                    return `Armazenamento SSD: ${value} GB`;
+                                }
+                                return `${label}: ${value}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Recursos / Escala' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // ---------------------------------------------------------
+        // Chart 2: Operational Efficiency (Conceptual MTTR/TCO Impact)
+        // ---------------------------------------------------------
+        const effCtx = document.getElementById('efficiencyChart').getContext('2d');
+        const efficiencyChart = new Chart(effCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mês 1 (Implantação)', 'Mês 3', 'Mês 6', 'Mês 9', 'Mês 12 (Estabilização)'],
+                datasets: [
+                    {
+                        label: 'Tempo Médio de Provisionamento (Minutos)',
+                        data: [45, 20, 10, 5, 2],
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Visitas Técnicas Improdutivas (Truck Rolls)',
+                        data: [100, 85, 50, 30, 15], // Indexed scale
+                        borderColor: 'rgba(239, 68, 68, 1)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.0)',
+                        borderWidth: 3,
+                        borderDash: [5, 5],
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { usePointStyle: true } },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    </script>
+</body>
+</html>

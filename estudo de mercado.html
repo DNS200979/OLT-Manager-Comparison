@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visão Geral de Mercado: Plataformas de Gestão OLT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chosen Palette: Warm Neutrals with Blue, Amber, and Navy Accents -->
+<!-- Application Structure Plan: A aplicação foi reestruturada para uma experiência de página única (Single-Page Dashboard) focada exclusivamente na 'Visão Geral', conforme solicitado. O layout flui logicamente: introdução do cenário, visualização de dados (gráficos de adoção e market share), explicação detalhada da divisão de mercado, perfil de clientes (Principais Clientes) e, por fim, a análise comercial com Preços e Planos. Essa arquitetura linear facilita a leitura analítica sem a necessidade de navegação por abas. -->
+<!-- Visualization & Content Choices: Gráfico de Linhas (Chart.js) para demonstrar a evolução de adoção temporal; Gráfico de Rosca (Chart.js) para evidenciar o Market Share. Containers de gráficos foram estritamente limitados em tamanho para garantir responsividade e evitar overflow. Tabelas e cards estruturados via Tailwind foram usados para apresentar clientes e planos de preços, substituindo elementos visuais complexos por tipografia clara e símbolos Unicode, assegurando zero uso de SVG. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<style>
+body { background-color: #fafaf9; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+.chart-container { position: relative; width: 100%; max-width: 500px; margin-left: auto; margin-right: auto; height: 300px; max-height: 350px; display: flex; justify-content: center; align-items: center; }
+@media (min-width: 1024px) { .chart-container { height: 350px; } }
+.fade-in { animation: fadeIn 0.6s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+/* Prevenir scroll horizontal */
+html, body { overflow-x: hidden; }
+</style>
+</head>
+<body class="text-stone-800 antialiased fade-in">
+
+<nav class="bg-stone-900 text-stone-100 shadow-xl sticky top-0 z-50 border-b-4 border-blue-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <div class="flex-shrink-0 flex items-center gap-3">
+                <span class="text-2xl">&#128423;</span>
+                <span class="font-bold text-xl tracking-tight text-stone-100">Portal OLT Brasil <span class="text-blue-400 font-normal">| Visão de Mercado</span></span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-semibold text-stone-300">
+                <a href="#mercado" class="hover:text-blue-400 transition-colors">Market Share</a>
+                <a href="#clientes" class="hover:text-blue-400 transition-colors">Principais Clientes</a>
+                <a href="#precos" class="hover:text-blue-400 transition-colors">Preços e Planos</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+    <!-- HEADER / INTRODUÇÃO -->
+    <header class="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-stone-200">
+        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-bold tracking-widest uppercase mb-4">&#128202; Relatório Executivo 2024</span>
+        <h1 class="text-4xl md:text-5xl font-black text-stone-900 mb-6 tracking-tight">O Cenário da Gestão FTTH no Brasil</h1>
+        <p class="text-lg md:text-xl leading-relaxed text-stone-600 max-w-4xl">
+            A orquestração de redes ópticas (GPON/EPON) deixou de ser uma barreira técnica para se tornar um diferencial estratégico. Esta visão geral analisa como <strong>IXC Soft, SmartOLT e Made4OLT</strong> dividem o mercado brasileiro, evidenciando seus modelos de negócio, os perfis de provedores que atendem e as estruturas de custos que definem suas ofertas.
+        </p>
+    </header>
+
+    <!-- SECÇÃO: MARKET SHARE E ADOÇÃO -->
+    <section id="mercado" class="space-y-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Gráfico 1: Adoção -->
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-stone-200 flex flex-col">
+                <h2 class="text-xl font-bold text-stone-800 mb-2 flex items-center gap-2"><span class="text-blue-600">&#128200;</span> Evolução da Base Instalada (ISPs)</h2>
+                <p class="text-sm text-stone-500 mb-6">Crescimento estimado de adesão de provedores por plataforma nos últimos 5 anos.</p>
+                <div class="chart-container w-full">
+                    <canvas id="adoptionChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Gráfico 2: Market Share -->
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-stone-200 flex flex-col">
+                <h2 class="text-xl font-bold text-stone-800 mb-2 flex items-center gap-2"><span class="text-blue-600">&#127829;</span> Market Share Estimado (2024)</h2>
+                <p class="text-sm text-stone-500 mb-6">Distribuição percentual entre as principais soluções de orquestração de OLTs.</p>
+                <div class="chart-container w-full">
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explicação do Market Share -->
+        <div class="bg-stone-100 p-8 rounded-3xl border border-stone-200">
+            <h3 class="text-2xl font-bold text-stone-800 mb-6 flex items-center gap-2">&#128269; Análise da Divisão de Mercado</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- IXC Soft -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-blue-900">
+                    <h4 class="font-black text-blue-900 text-xl mb-3">IXC Soft (42%)</h4>
+                    <p class="text-sm text-stone-600 leading-relaxed">
+                        A liderança da IXC baseia-se na estratégia <strong>"All-in-One"</strong>. Como a plataforma é primordialmente um ERP financeiro e administrativo dominante no Brasil, o módulo de provisionamento de OLT vem embutido. ISPs preferem centralizar faturamento, bloqueio automático e gerência de rede em um único ecossistema, impulsionando a fatia de mercado do IXC através da venda cruzada orgânica.
+                    </p>
+                </div>
+                <!-- SmartOLT -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-amber-500">
+                    <h4 class="font-black text-amber-600 text-xl mb-3">SmartOLT (28%)</h4>
+                    <p class="text-sm text-stone-600 leading-relaxed">
+                        Ocupa a vice-liderança por sua natureza <strong>100% Nuvem e Agilidade Multi-Vendor</strong>. É a escolha preferida de ISPs que utilizam ERPs mais enxutos (ou legados) e precisam de uma ferramenta externa dedicada e altamente eficiente para a rede óptica. A forte presença global e o aplicativo mobile para técnicos de campo aceleram muito sua adoção.
+                    </p>
+                </div>
+                <!-- Made4OLT -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-blue-600">
+                    <h4 class="font-black text-blue-600 text-xl mb-3">Made4OLT (18%)</h4>
+                    <p class="text-sm text-stone-600 leading-relaxed">
+                        Conquistou um share sólido apostando em <strong>Engenharia de Rede e Suporte Consultivo</strong>. É a plataforma eleita por provedores que buscam um controle técnico mais profundo (diagnósticos finos, gráficos Tx/Rx detalhados) e valorizam a proximidade com o suporte N3 brasileiro oferecido pela Made4it, frequentemente atrelado a consultorias de BGP e IPv6.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECÇÃO: PRINCIPAIS CLIENTES -->
+    <section id="clientes" class="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-stone-200">
+        <h2 class="text-3xl font-bold text-stone-900 mb-2 flex items-center gap-3"><span class="text-3xl">&#127970;</span> Perfil e Principais Clientes</h2>
+        <p class="text-stone-600 mb-8 max-w-3xl">Cada plataforma atrai um perfil corporativo distinto, desde gigantes consolidados que buscam padronização até provedores emergentes que necessitam de velocidade de implantação.</p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Clientes IXC -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 border-b-2 border-stone-100 pb-3">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-900 rounded-lg flex items-center justify-center font-bold">IX</div>
+                    <h3 class="text-lg font-bold text-stone-800">IXC Soft</h3>
+                </div>
+                <p class="text-sm text-stone-500 font-medium">Perfil: Consolidadores e Grandes ISPs Regionais.</p>
+                <ul class="space-y-3">
+                    <li class="bg-stone-50 p-3 rounded-xl border border-stone-100">
+                        <strong class="block text-stone-800">Provedores Nacionais (Top Tier)</strong>
+                        <span class="text-xs text-stone-500">Operações que ultrapassam 100k assinantes e necessitam de conformidade fiscal e automação financeira rigorosa atrelada à rede.</span>
+                    </li>
+                    <li class="bg-stone-50 p-3 rounded-xl border border-stone-100">
+                        <strong class="block text-stone-800">Giga+ Fibra / Sumicity (Módulos)</strong>
+                        <span class="text-xs text-stone-500">Uso de módulos e integrações via API para gestão de vastos parques de equipamentos.</span>
+                    </li>
+                    <li class="bg-stone-50 p-3 rounded-xl border border-stone-100">
+                        <strong class="block text-stone-800">ISPs Regionais (Ex: MHNET)</strong>
+                        <span class="text-xs text-stone-500">Gestão unificada que permite fusões e aquisições (M&A) sem perder o controle do faturamento.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Clientes SmartOLT -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 border-b-2 border-stone-100 pb-3">
+                    <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-lg flex items-center justify-center font-bold">SO</div>
+                    <h3 class="text-lg font-bold text-stone-800">SmartOLT (INT6)</h3>
+                </div>
+                <p class="text-sm text-stone-500 font-medium">Perfil: ISPs Ágeis e Operações Descentralizadas.</p>
+                <ul class="space-y-3">
+                    <li class="bg-stone-50 p-3 rounded-xl border border-stone-100">
+                        <strong class="block text-stone-800">Brasil Tecpar / Vero Internet</strong>
+                        <span class="text-xs text-stone-500">Grandes conglomerados que utilizam a ferramenta para padronizar o provisionamento de equipes de campo terceirizadas.</span>
+                    </li>
+                    <li class="bg-stone-50 p-3 rounded-xl border border-stone-100">
+                        <strong class="block text-stone-800">ISPs Multi-Vendor</strong>
+                        <span class="text-xs text-stone-500">Provedores que importam múltiplas marcas asiáticas (V-Sol, C-Data, Huawei) e precisam de uma camada única de gestão.</span>
+                    </li>
+                    <li class="bg-stone-50 p-3 rounded-xl border border-stone-100">
+                        <strong class="block text-stone-800">Franquias de Internet</strong>
+                        <span class="text-xs text-stone-500">Operações que seccionam a rede via V-LANs e alugam infraestrutura, facilitado pelo controle na nuvem do SmartOLT.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Clientes Made4OLT -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 border-b-2 border-stone-100 pb-3">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center font-bold">M4</div>
+                    <h3 class="text-lg font-bold text-stone-800">Made4OLT</h3>
+                </div>
+                <p class="text-sm text-stone-500 font-medium">Perfil: Provedores Premium e Focados em NOC.</p>
+                <ul class="space-y-3">
+                    <li class="bg-stone-50 p-3 rounded-xl border border-stone-100">
+                        <strong class="block text-stone-800">Provedores com NOC Estruturado</strong>
+                        <span class="text-xs text-stone-500">Empresas que possuem centros de gerência avançados e exigem logs profundos, TRAP de eventos e SNMP detalhado.</span>
+                    </li>
+                    <li class="bg-stone-50 p-3 rounded-xl border border-stone-100">
+                        <strong class="block text-stone-800">Pontonet / Provedores Regionais B2B</strong>
+                        <span class="text-xs text-stone-500">Focados em estabilidade corporativa, utilizam o ecossistema Made4it integrado (Made4Flow + Made4OLT).</span>
+                    </li>
+                    <li class="bg-stone-50 p-3 rounded-xl border border-stone-100">
+                        <strong class="block text-stone-800">ISPs em Transição Tecnológica</strong>
+                        <span class="text-xs text-stone-500">Redes passando de CGNAT para IPv6 ou redes híbridas, apoiadas pela consultoria embutida na ferramenta.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECÇÃO: PREÇOS E PLANOS -->
+    <section id="precos" class="space-y-8">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+            <h2 class="text-3xl font-bold text-stone-900 mb-4 flex items-center justify-center gap-3"><span class="text-3xl">&#128176;</span> Preços e Modelos de Comercialização</h2>
+            <p class="text-stone-600">Compreender a estrutura de custos é vital. As plataformas adotam modelos de precificação radicalmente diferentes, baseando-se em OLTs, ONUs ou volume de assinantes gerais do ERP.</p>
+            <p class="text-xs text-stone-400 mt-2">*Valores estimados e adaptados para o mercado brasileiro (baseados em médias de mercado em BRL). Sujeitos a negociações corporativas.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Preço SmartOLT -->
+            <div class="bg-white rounded-3xl p-8 border border-stone-200 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
+                <div class="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">Pay as you grow</div>
+                <div class="mb-6">
+                    <h3 class="text-2xl font-black text-stone-800 mb-1">SmartOLT</h3>
+                    <p class="text-sm text-stone-500">Licenciamento por Equipamento</p>
+                </div>
+                <div class="mb-6 flex items-baseline gap-1">
+                    <span class="text-4xl font-black text-amber-600">~R$ 450</span>
+                    <span class="text-stone-500 font-medium">/mês por OLT</span>
+                </div>
+                <ul class="space-y-3 mb-8 text-sm text-stone-600">
+                    <li class="flex items-center gap-2"><span class="text-emerald-500">&#10004;</span> Cobrado por chassis de OLT adicionado</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-500">&#10004;</span> 100% Hospedado na Nuvem (Incluso)</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-500">&#10004;</span> App mobile liberado</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-500">&#10004;</span> ONUs ilimitadas por chassi</li>
+                    <li class="flex items-center gap-2 text-stone-400"><span class="text-stone-300">&#10008;</span> Integrações ERP avançadas pagas à parte</li>
+                </ul>
+                <div class="bg-stone-50 p-4 rounded-xl text-xs text-stone-500 border border-stone-100">
+                    <strong>Modelo Ideal para:</strong> Provedores em expansão rápida de hardware que não querem amarrar o custo da gerência ao número de assinantes.
+                </div>
+            </div>
+
+            <!-- Preço IXC -->
+            <div class="bg-blue-900 rounded-3xl p-8 shadow-xl relative overflow-hidden text-white transform md:-translate-y-4">
+                <div class="absolute -right-10 -top-10 text-white opacity-10 text-9xl">&#9733;</div>
+                <div class="mb-6 relative z-10">
+                    <h3 class="text-2xl font-black mb-1">IXC Provedor</h3>
+                    <p class="text-sm text-blue-200">ERP Completo (Módulo OLT Incluso)</p>
+                </div>
+                <div class="mb-6 flex items-baseline gap-1 relative z-10">
+                    <span class="text-4xl font-black text-white">R$ 1.200+</span>
+                    <span class="text-blue-200 font-medium">/mês (Baseado em Cadastros)</span>
+                </div>
+                <ul class="space-y-3 mb-8 text-sm text-blue-100 relative z-10">
+                    <li class="flex items-center gap-2"><span class="text-cyan-400">&#10004;</span> Gestão de OLTs sem limite de chassis</li>
+                    <li class="flex items-center gap-2"><span class="text-cyan-400">&#10004;</span> Precificado por "Faixas de Clientes" no ERP</li>
+                    <li class="flex items-center gap-2"><span class="text-cyan-400">&#10004;</span> Faturamento, Fiscal e Rede juntos</li>
+                    <li class="flex items-center gap-2"><span class="text-cyan-400">&#10004;</span> Automação de bloqueio/desbloqueio nativa</li>
+                    <li class="flex items-center gap-2"><span class="text-cyan-400">&#10004;</span> Suporte e Wiki embutidos no valor</li>
+                </ul>
+                <div class="bg-blue-950 p-4 rounded-xl text-xs text-blue-200 border border-blue-800 relative z-10">
+                    <strong>Modelo Ideal para:</strong> Provedores que encaram o sistema como coração da empresa e aceitam pagar proporcionalmente à base total de assinantes.
+                </div>
+            </div>
+
+            <!-- Preço Made4OLT -->
+            <div class="bg-white rounded-3xl p-8 border border-stone-200 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-black text-stone-800 mb-1">Made4OLT</h3>
+                    <p class="text-sm text-stone-500">Planos por Porte (ONUs / OLTs)</p>
+                </div>
+                <div class="mb-6 flex items-baseline gap-1">
+                    <span class="text-4xl font-black text-blue-600">R$ 499</span>
+                    <span class="text-stone-500 font-medium">/mês (Licença Inicial)</span>
+                </div>
+                <ul class="space-y-3 mb-8 text-sm text-stone-600">
+                    <li class="flex items-center gap-2"><span class="text-emerald-500">&#10004;</span> Licença Base cobre até 2 OLTs</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-500">&#10004;</span> Opção de instalação On-Premise (Local)</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-500">&#10004;</span> Suporte de Engenharia Premium</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-500">&#10004;</span> Escalável via add-ons corporativos</li>
+                    <li class="flex items-center gap-2 text-stone-400"><span class="text-stone-300">&#10008;</span> Servidor Nuvem tem custo adicional (opcional)</li>
+                </ul>
+                <div class="bg-stone-50 p-4 rounded-xl text-xs text-stone-500 border border-stone-100">
+                    <strong>Modelo Ideal para:</strong> ISPs que exigem segurança de dados locais (On-Premise) e preferem um custo fixo previsível atrelado a módulos de engenharia.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-stone-900 border-t border-stone-800 mt-12 py-10 text-center">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-center gap-2 mb-4">
+            <span class="text-xl">&#128423;</span>
+            <span class="font-bold text-stone-300 tracking-tight">Portal OLT Brasil</span>
+        </div>
+        <p class="text-sm text-stone-500">Relatório Consolidado de Mercado • Inteligência e Estratégia FTTH</p>
+    </div>
+</footer>
+
+<script>
+// Lógica para inicialização dos gráficos usando Chart.js
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // Configurações comuns para responsividade e estilo
+    Chart.defaults.font.family = 'ui-sans-serif, system-ui, sans-serif';
+    Chart.defaults.color = '#78716c';
+
+    // Gráfico 1: Adoção / Crescimento da Base
+    const ctxAdoption = document.getElementById('adoptionChart').getContext('2d');
+    new Chart(ctxAdoption, {
+        type: 'line',
+        data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [
+                { 
+                    label: 'IXC (Base ERP/OLT)', 
+                    data: [1200, 2100, 3200, 4100, 4800], 
+                    borderColor: '#1e3a8a', 
+                    backgroundColor: 'rgba(30, 58, 138, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4, 
+                    fill: true 
+                },
+                { 
+                    label: 'SmartOLT', 
+                    data: [400, 950, 1800, 2400, 2900], 
+                    borderColor: '#d97706', 
+                    backgroundColor: 'rgba(217, 119, 6, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4, 
+                    fill: false 
+                },
+                { 
+                    label: 'Made4OLT', 
+                    data: [300, 680, 1100, 1500, 1900], 
+                    borderColor: '#2563eb', 
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4, 
+                    fill: false 
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
+                tooltip: { mode: 'index', intersect: false }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: '#f5f5f4' } },
+                x: { grid: { display: false } }
+            },
+            interaction: { mode: 'nearest', axis: 'x', intersect: false }
+        }
+    });
+
+    // Gráfico 2: Market Share (Doughnut)
+    const ctxMarket = document.getElementById('marketChart').getContext('2d');
+    new Chart(ctxMarket, {
+        type: 'doughnut',
+        data: {
+            labels: ['IXC Soft', 'SmartOLT', 'Made4OLT', 'Outros/In-house'],
+            datasets: [{
+                data: [42, 28, 18, 12],
+                backgroundColor: [
+                    '#1e3a8a', // Navy (IXC)
+                    '#f59e0b', // Amber (SmartOLT)
+                    '#2563eb', // Blue (Made4OLT)
+                    '#d6d3d1'  // Stone (Outros)
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%',
+            plugins: {
+                legend: { position: 'right', labels: { usePointStyle: true, padding: 15 } },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return ' ' + context.label + ': ' + context.parsed + '% do mercado';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Técnica Exaustiva: Ecossistema SmartOLT & INT6</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(to right, #f97316, #eab308);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-orange-200">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="cpu" class="w-8 h-8 text-orange-500"></i>
+                    <span class="font-bold text-xl tracking-tight text-slate-900">Tech<span class="text-orange-500">Review</span></span>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#ecossistema" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition">Ecossistema</a>
+                    <a href="#protocolos" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition">Multi-Vendor</a>
+                    <a href="#automacao" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition">Automação & Zero-Touch</a>
+                    <a href="#comunidade" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition">Comunidade</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-slate-900 overflow-hidden pt-16 pb-24">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%231e293b\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-orange-900/80"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-sm font-semibold mb-6 border border-orange-400/30">
+                <i data-lucide="file-text" class="w-4 h-4"></i> Análise Sistêmica Exaustiva
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6">
+                Ecossistema <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">SmartOLT & INT6</span>
+            </h1>
+            <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-300 leading-relaxed mb-10">
+                Orquestração GPON, Zero-Touch Provisioning e gestão avançada de infraestrutura óptica. A evolução técnica necessária para viabilizar operações de provedores de internet (ISPs) em escala no Brasil.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-sm font-medium">
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg text-white flex items-center gap-2 border border-white/20">
+                    <i data-lucide="layers" class="w-5 h-5 text-orange-400"></i> Mais de 2 Milhões de Assinantes
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg text-white flex items-center gap-2 border border-white/20">
+                    <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i> +60.000 Ativações Mensais
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Context & Fundamentals -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
+        
+        <!-- Highlights Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="unlock" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">Fim do Lock-in</h3>
+                <p class="text-slate-600 text-sm">Suporte homologado a diversas marcas, permitindo o uso de ONUs de terceiros (Third-party ONTs) com total segurança.</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="smartphone" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">Mobile-centric</h3>
+                <p class="text-slate-600 text-sm">Com o AutoISP, o técnico de campo autoriza a ONU via aplicativo no momento da instalação física.</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="rocket" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">Zero Touch</h3>
+                <p class="text-slate-600 text-sm">Configuração de serviços de internet, VoIP e IPTV em menos de 10 segundos, de forma quase autônoma.</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="activity" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2">Monitoramento PON</h3>
+                <p class="text-slate-600 text-sm">Visibilidade em tempo real do nível de sinal óptico, tráfego de portas e saúde dos chassis das OLTs.</p>
+            </div>
+        </div>
+
+        <div class="prose prose-slate max-w-none mb-16 text-center">
+            <p class="text-lg text-slate-600 leading-relaxed max-w-4xl mx-auto">
+                A gestão tradicional de uma OLT baseia-se historicamente no uso de interfaces de linha de comando (CLI). O SmartOLT e as soluções da INT6 Tecnologia operam na camada de abstração, traduzindo intenções de negócio e comandos simplificados em instruções técnicas precisas que a OLT pode processar instantaneamente, transformando a filosofia de gestão de redes FTTH no Brasil.
+            </p>
+        </div>
+
+        <!-- Section 1: Ecossistema -->
+        <section id="ecossistema" class="mb-20 scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <i data-lucide="layers" class="w-8 h-8 text-orange-500"></i>
+                <h2 class="text-3xl font-bold text-slate-800">Ecossistema: Engenharia INT6 & SmartOLT</h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4 text-slate-700">Composição da Plataforma</h3>
+                    <div class="space-y-4">
+                        <div class="p-5 bg-white border border-slate-200 rounded-xl flex gap-4 hover:border-orange-300 transition">
+                            <div class="mt-1"><i data-lucide="cloud" class="w-6 h-6 text-blue-500"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">SmartOLT Cloud (NextLAN/INT6)</h4>
+                                <p class="text-sm text-slate-600">Baseada em nuvem (AWS/Digital Ocean), foca na gerência da OLT, monitoramento de saúde da porta PON e tráfego em tempo real.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 bg-orange-50 border border-orange-100 rounded-xl flex gap-4 hover:border-orange-300 transition relative overflow-hidden">
+                            <div class="mt-1 relative z-10"><i data-lucide="server-cog" class="w-6 h-6 text-orange-600"></i></div>
+                            <div class="relative z-10">
+                                <h4 class="font-bold text-slate-800">EasyOLT (INT6 Tech)</h4>
+                                <p class="text-sm text-slate-600">Solução baseada em nuvem que proporciona uma gestão "2 em 1" (Técnica e Assinantes), ideal para o suporte técnico níveis N1 a N3 e independência funcional de ERPs.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 bg-white border border-slate-200 rounded-xl flex gap-4 hover:border-orange-300 transition">
+                            <div class="mt-1"><i data-lucide="smartphone" class="w-6 h-6 text-emerald-500"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">AutoISP (INT6 Tech)</h4>
+                                <p class="text-sm text-slate-600">Mobile-centric automation. Foca no provisionamento e na equipe de campo, garantindo total integração com ERP/CRM diretamente na palma da mão do técnico.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart: Provisioning Time -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-center mb-4 text-slate-700">Tempo Médio de Provisionamento de ONU</h3>
+                    <div class="relative h-64">
+                        <canvas id="provisioningChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-slate-500 mt-4">*Comparativo entre CLI Manual (Line-profiles, GemPorts, VLANs) e SmartOLT (1 Clique).</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-slate-200 my-16">
+
+        <!-- Section 3: Operação e Zero Touch -->
+        <section id="automacao" class="mb-20 scroll-mt-24">
+            <div class="text-center mb-12">
+                <span class="text-orange-600 font-semibold tracking-wider uppercase text-sm">Autonomia Operacional</span>
+                <h2 class="text-3xl font-bold text-slate-800 mt-2">Zero-Touch Provisioning e Automação GPON</h2>
+                <p class="text-slate-600 mt-4 max-w-2xl mx-auto">A orquestração que substitui a intervenção manual na CLI, transformando a ativação de clientes e o gerenciamento de perfis ópticos.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Zero Touch -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-orange-50 rounded-bl-full -z-0"></div>
+                    <div class="relative z-10">
+                        <div class="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="zap" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Provisionamento < 10s</h3>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Detecção Automática:</b> O sistema rastreia <i>unconfigured ONUs</i> em tempo real na rede PON.</li>
+                            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Templates com 1 Clique:</b> Aplica hierarquia completa de T-CONT, GemPort, Line-profile e VLANs instantaneamente.</li>
+                            <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>AutoISP:</b> Técnico ativa o contrato pelo app antes mesmo de sair da casa do cliente.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Gestão de Rede Óptica -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-blue-500 shadow-md relative">
+                    <div class="absolute -top-3 -right-3 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                        Core Feature
+                    </div>
+                    <div class="w-10 h-10 bg-blue-600 text-white rounded-lg flex items-center justify-center mb-4 shadow-sm">
+                        <i data-lucide="server" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Gestão de Portas PON</h3>
+                    <ul class="space-y-2 text-sm text-slate-600 mb-4">
+                        <li class="flex items-start gap-2"><i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-0.5 shrink-0"></i> <b>Leitura de Sinal:</b> Consulta instantânea de Tx/Rx das ONUs sem acessar a OLT via terminal.</li>
+                        <li class="flex items-start gap-2"><i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-0.5 shrink-0"></i> <b>Controle de UpLinks:</b> Monitoramento de tráfego e erros em portas Ethernet/SFP+.</li>
+                        <li class="flex items-start gap-2"><i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-0.5 shrink-0"></i> <b>Reinicialização Remota:</b> Comandos de reset direto na porta da ONU para troubleshooting rápido.</li>
+                    </ul>
+                </div>
+
+                <!-- Ações em Massa -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="copy" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Bulk Actions & Inteligência</h3>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Gestão de Firmware:</b> Atualização massiva de ONUs para correção de bugs ou melhorias.</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Troca de VLANs em Lote:</b> Alterações em centenas de portas PON simultaneamente.</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i> <b>Logs de Auditoria:</b> Transparência de quem alterou a configuração e seu impacto na rede.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Graphic Representation of Automation Impact -->
+            <div class="mt-12 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-6 text-center">Impacto da Orquestração no Troubleshooting Óptico</h3>
+                <div class="relative h-64 md:w-3/4 mx-auto">
+                    <canvas id="efficiencyChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-slate-200 my-16">
+
+        <!-- Section 4: Inteligência, GPS e Segurança -->
+        <section id="inteligencia" class="mb-20 scroll-mt-24">
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-xl">
+                <!-- Decorative background elements -->
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-orange-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+                <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+                <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">Inteligência Algorítmica e Segurança</span>
+                        </div>
+                        <h2 class="text-3xl font-extrabold mb-6">Predição, Geolocalização e Segurança em Nuvem</h2>
+                        
+                        <div class="space-y-5">
+                            <div class="flex gap-4">
+                                <div class="bg-white/10 p-3 rounded-xl shrink-0"><i data-lucide="activity" class="w-6 h-6 text-orange-400"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">Análise Preditiva de Sinal</h4>
+                                    <p class="text-sm text-slate-300">O sistema emite alertas automáticos se uma ONU apresenta variação de sinal de +/- 3dB num curto período, identificando fibras dobradas ou splitters danificados antes da queda total.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="bg-white/10 p-3 rounded-xl shrink-0"><i data-lucide="map-pin" class="w-6 h-6 text-emerald-400"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">GPS e Gestão de Ativos</h4>
+                                    <p class="text-sm text-slate-300">Integração com Google Street View e captura de coordenadas geográficas no ato da autorização, mapeando com precisão Caixas de Atendimento (ODBs) para manutenções rápidas.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="bg-white/10 p-3 rounded-xl shrink-0"><i data-lucide="shield-check" class="w-6 h-6 text-blue-400"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">Criptografia e VPN Mikrotik</h4>
+                                    <p class="text-sm text-slate-300">Como a gerência fica na nuvem, o SmartOLT gera scripts para túneis <b>OVPN ou L2TP/IPsec no Mikrotik</b> e utiliza <b>ACLs</b> para isolar as portas Telnet/SNMP apenas para os IPs dos servidores, protegendo contra sequestro de infraestrutura.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hidden md:block">
+                        <div class="glass-card rounded-2xl p-6 relative border-slate-700 bg-slate-800/80">
+                            <div class="flex items-center gap-3 mb-4 border-b border-white/10 pb-4">
+                                <div class="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center"><i data-lucide="bot" class="text-white"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white">Chatbot de Suporte N0</h4>
+                                    <p class="text-xs text-slate-400">Integração via API SmartOLT</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4 text-sm text-slate-800">
+                                <div class="bg-blue-50 text-blue-900 p-3 rounded-lg rounded-tl-none inline-block max-w-[85%]">
+                                    Minha internet está sem sinal.
+                                </div>
+                                <div class="text-right">
+                                    <div class="bg-slate-700 text-white p-3 rounded-lg rounded-tr-none inline-block max-w-[85%] text-left shadow-sm">
+                                        <div class="text-xs text-slate-400 mb-1 flex items-center gap-1"><i data-lucide="loader-2" class="w-3 h-3 animate-spin text-orange-400"></i> API SmartOLT analisando...</div>
+                                        Bot: Verifiquei aqui na central que sua região está sob manutenção preventiva (Sinal LOS detectado na OLT). A previsão de retorno é em 30 minutos.
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2 text-center">Permite ISPs com centenas de milhares de assinantes operarem com equipes enxutas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Comunidade, Treinamento e Mercado -->
+        <section id="comunidade" class="mb-20 scroll-mt-24">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="youtube" class="w-8 h-8 text-red-600"></i>
+                        <h2 class="text-3xl font-bold text-slate-800">Educação e Presença Digital</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6">
+                        A capacitação contínua é o motor da adoção tecnológica. A INT6 e parceiros (como Made4it e Telecom Treinamentos) utilizam plataformas como o YouTube e o <i>Made4Study</i> para ensinar desde a gerência de OLTs até BGP em Juniper/Huawei.
+                    </p>
+                    
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <table class="w-full text-sm text-left text-slate-600">
+                            <thead class="text-xs text-slate-700 bg-slate-50">
+                                <tr>
+                                    <th class="px-6 py-4 font-bold">Título do Tutorial / Conteúdo</th>
+                                    <th class="px-6 py-4 font-bold">Tópico Abordado</th>
+                                    <th class="px-6 py-4 font-bold text-right">Visualizações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2">Monitoramento Avançado de Sinal PON</td>
+                                    <td class="px-6 py-4 text-xs">Análise de Tx/Rx e detecção de LOS em massa</td>
+                                    <td class="px-6 py-4 text-right font-bold text-orange-600">~11.000</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2">Autorizando uma ONU</td>
+                                    <td class="px-6 py-4 text-xs">Descoberta, templates e ativação no SmartOLT</td>
+                                    <td class="px-6 py-4 text-right font-bold text-orange-600">~9.200</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2">Integrando OLT Huawei</td>
+                                    <td class="px-6 py-4 text-xs">Parâmetros SNMP, Telnet e Firmware</td>
+                                    <td class="px-6 py-4 text-right font-bold text-orange-600">~7.100</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-semibold text-slate-800 flex items-center gap-2">Configuração de VPN Mikrotik</td>
+                                    <td class="px-6 py-4 text-xs">Túneis seguros e roteamento de gerência</td>
+                                    <td class="px-6 py-4 text-right font-bold text-orange-600">~3.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Painel Lateral: Casos de Uso -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="building-2" class="w-8 h-8 text-blue-600"></i>
+                        <h2 class="text-2xl font-bold text-slate-800">Casos de Sucesso</h2>
+                    </div>
+                    
+                    <div class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm mb-4">
+                        <p class="text-sm text-slate-600 mb-4">
+                            A base de clientes da plataforma prova sua escalabilidade "carrier-grade", servindo gigantes da consolidação e ISPs de alto crescimento:
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                <span class="font-bold text-slate-800 text-sm">Vero Internet</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                                <span class="font-bold text-slate-800 text-sm">Brasil Tecpar</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+                                <span class="font-bold text-slate-800 text-sm">MHNET Telecom</span>
+                            </li>
+                        </ul>
+                        <p class="text-xs text-slate-500 mt-4 pt-4 border-t border-slate-100">
+                            <b>Outros Parceiros Relevantes:</b> Allrede, Zaaz, Sebratel, Viu, Voanet, Avanza, Atex, D-bug Telecom e GGNET.
+                        </p>
+                    </div>
+
+                    <div class="bg-orange-50 border border-orange-200 p-4 rounded-xl text-center">
+                        <p class="text-xs font-bold text-orange-800 uppercase tracking-widest mb-1">Evolução do Mercado</p>
+                        <p class="text-sm text-orange-900">
+                            A transição para redes <b>XGS-PON</b> e orquestração baseada em APIs levará os provedores a um novo patamar de capacidade, expandindo o escopo de gestão óptica dos ISPs brasileiros.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 py-12 text-center text-slate-400">
+        <div class="flex justify-center items-center gap-2 mb-4">
+            <i data-lucide="cpu" class="w-6 h-6 text-orange-600/50"></i>
+            <span class="font-bold text-slate-300 tracking-tight">Tech<span class="text-orange-600/70">Review</span></span>
+        </div>
+        <p class="text-sm">Relatório analítico baseado nos fundamentos técnicos e mercadológicos do sistema SmartOLT e soluções INT6.</p>
+        <p class="text-xs mt-2 text-slate-600">Desenvolvido para profissionais de rede e gestores de tecnologia de Provedores de Internet (ISP).</p>
+    </footer>
+
+    <!-- Initialization Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // ---------------------------------------------------------
+        // Chart 1: Provisioning Time (Manual vs SmartOLT)
+        // ---------------------------------------------------------
+        const provCtx = document.getElementById('provisioningChart').getContext('2d');
+        const provisioningChart = new Chart(provCtx, {
+            type: 'bar',
+            data: {
+                labels: ['CLI Manual (CLI / OMCI)', 'SmartOLT (Template/AutoISP)'],
+                datasets: [{
+                    label: 'Tempo Médio Estimado (Segundos)',
+                    data: [300, 10], // representational times for visual impact
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.6)', // slate-400
+                        'rgba(249, 115, 22, 0.8)'   // orange-500
+                    ],
+                    borderColor: [
+                        'rgba(148, 163, 184, 1)',
+                        'rgba(249, 115, 22, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.x + ' Segundos';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { beginAtZero: true, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Segundos (Menor é melhor)' } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // ---------------------------------------------------------
+        // Chart 2: Operational Efficiency (OLT/GPON Impact)
+        // ---------------------------------------------------------
+        const effCtx = document.getElementById('efficiencyChart').getContext('2d');
+        const efficiencyChart = new Chart(effCtx, {
+            type: 'line',
+            data: {
+                labels: ['Implantação', 'Mês 1', 'Mês 3', 'Mês 6', 'Mês 12'],
+                datasets: [
+                    {
+                        label: 'Tempo de Resolução N1 (Escalonamentos)',
+                        data: [100, 80, 45, 20, 10], // Base index
+                        borderColor: 'rgba(59, 130, 246, 1)', // blue-500
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Falhas Críticas de Provisionamento / CLI',
+                        data: [100, 75, 40, 25, 15], // Base index
+                        borderColor: 'rgba(239, 68, 68, 1)', // red-500
+                        backgroundColor: 'rgba(239, 68, 68, 0.0)',
+                        borderWidth: 3,
+                        borderDash: [5, 5],
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { usePointStyle: true } },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Índice de Ocorrências' } },
+                    x: { grid: { display: false } }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    </script>
+</body>
+</html>
