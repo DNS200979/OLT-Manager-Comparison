@@ -165,32 +165,88 @@
             <div class="lg:col-span-2 glass-panel p-6 rounded-2xl shadow-sm">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2"><i data-lucide="radar" class="text-blue-500"></i> Comparativo de Foco Operacional</h2>
-                    <a href="OLT Manager Compare.html" class="text-sm text-blue-600 hover:underline font-medium">Ver Comparativo Detalhado</a>
+                    <!-- <a href="OLT Manager Compare.html" class="text-sm text-blue-600 hover:underline font-medium">Ver Comparativo Detalhado</a> -->
                 </div>
                 <div class="relative h-80 w-full flex justify-center">
                     <canvas id="overviewRadarChart"></canvas>
                 </div>
             </div>
-
             <div class="glass-panel p-6 rounded-2xl shadow-sm flex flex-col">
                 <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2"><i data-lucide="folder-search" class="text-emerald-500"></i> Outros Relatórios</h2>
                 
                 <div class="space-y-4 flex-grow">
                     <a href="EStudo de Share por fabricante.html" class="group block p-4 rounded-xl border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50 transition-all">
                         <div class="flex items-center justify-between mb-1">
-                            <h4 class="font-bold text-slate-800 group-hover:text-emerald-700">Market Share (Estudo)</h4>
+                            <h4 class="font-bold text-slate-800 group-hover:text-emerald-700">Mercado Brasil de OLT</h4>
                             <i data-lucide="pie-chart" class="w-5 h-5 text-emerald-500"></i>
                         </div>
-                        <p class="text-xs text-slate-500">Análise da distribuição de OLTs Huawei, ZTE, Fiberhome e Datacom no mercado LATAM.</p>
+                        <p class="text-xs text-slate-500">Análise da distribuição de OLTs Huawei, ZTE, Fiberhome e Datacom no mercado Brasileiro.</p>
                     </a>
 
                     <a href="OLT Manager Compare.html" class="group block p-4 rounded-xl border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
                         <div class="flex items-center justify-between mb-1">
-                            <h4 class="font-bold text-slate-800 group-hover:text-blue-700">Tabela Comparativa</h4>
+                            <h4 class="font-bold text-slate-800 group-hover:text-blue-700">Marketing Share Gerenciadores</h4>
                             <i data-lucide="git-compare" class="w-5 h-5 text-blue-500"></i>
                         </div>
-                        <p class="text-xs text-slate-500">Matriz lado-a-lado de funcionalidades: Made4OLT vs SmartOLT vs IXC.</p>
+                        <p class="text-xs text-slate-500">Matriz de ganho de mercado para: Made4OLT vs SmartOLT vs IXC.</p>
                     </a>
+                </div>
+            </div>
+            <div class="lg:col-span-3 glass-panel p-6 rounded-2xl shadow-sm flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2"><i data-lucide="list-checks" class="text-blue-500"></i> Comparativo de Funcionalidades</h2>
+                   <!--<a href="OLT Manager Compare.html" class="text-sm text-blue-600 hover:underline font-medium hidden sm:block">Ver Comparativo Detalhado</a> -->
+                </div>
+                
+                <div class="overflow-x-auto flex-grow">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-slate-50 border-b border-slate-200 text-slate-600">
+                            <tr>
+                                <th class="p-3 font-semibold rounded-tl-lg">Categoria</th>
+                                <th class="p-3 font-semibold text-blue-700">Made4OLT</th>
+                                <th class="p-3 font-semibold text-amber-600">SmartOLT</th>
+                                <th class="p-3 font-semibold text-teal-700">IXC Soft</th>
+                                <th class="p-3 font-semibold text-violet-600 rounded-tr-lg">Aprecomm VNE</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-3 font-medium text-slate-800">Telemetria & Troubleshooting</td>
+                                <td class="p-3 text-emerald-600 font-medium"><i data-lucide="check-circle-2" class="w-4 h-4 inline mr-1"></i> Avançado</td>
+                                <td class="p-3 text-slate-600"><i data-lucide="check" class="w-4 h-4 inline mr-1"></i> Padrão</td>
+                                <td class="p-3 text-slate-600"><i data-lucide="check" class="w-4 h-4 inline mr-1"></i> Básico</td>
+                                <td class="p-3 text-emerald-600 font-medium"><i data-lucide="check-circle-2" class="w-4 h-4 inline mr-1"></i> Avançado</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-3 font-medium text-slate-800">Provisionamento Zero-Touch</td>
+                                <td class="p-3 text-slate-600"><i data-lucide="check" class="w-4 h-4 inline mr-1"></i> Sim (Templates)</td>
+                                <td class="p-3 text-emerald-600 font-medium"><i data-lucide="check-circle-2" class="w-4 h-4 inline mr-1"></i> Excelente</td>
+                                <td class="p-3 text-slate-600"><i data-lucide="check" class="w-4 h-4 inline mr-1"></i> Sim</td>
+                                <td class="p-3 text-slate-600"><i data-lucide="check" class="w-4 h-4 inline mr-1"></i> Automação (VCS)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-3 font-medium text-slate-800">Integração ERP / Financeira</td>
+                                <td class="p-3 text-amber-500"><i data-lucide="minus" class="w-4 h-4 inline mr-1"></i> Via API</td>
+                                <td class="p-3 text-amber-500"><i data-lucide="minus" class="w-4 h-4 inline mr-1"></i> Via API</td>
+                                <td class="p-3 text-emerald-600 font-medium"><i data-lucide="check-circle-2" class="w-4 h-4 inline mr-1"></i> Nativa Absoluta</td>
+                                <td class="p-3 text-amber-500"><i data-lucide="minus" class="w-4 h-4 inline mr-1"></i> Via API</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-3 font-medium text-slate-800">Mobilidade (App de Campo)</td>
+                                <td class="p-3 text-amber-500"><i data-lucide="check" class="w-4 h-4 inline mr-1"></i> Parcial</td>
+                                <td class="p-3 text-emerald-600 font-medium"><i data-lucide="check-circle-2" class="w-4 h-4 inline mr-1"></i> Foco Nativo</td>
+                                <td class="p-3 text-slate-600"><i data-lucide="check" class="w-4 h-4 inline mr-1"></i> Sim</td>
+                                <td class="p-3 text-slate-400"><i data-lucide="minus" class="w-4 h-4 inline mr-1"></i> Não Focado</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-3 font-medium text-slate-800">Inteligência Preditiva / AIOps</td>
+                                <td class="p-3 text-slate-400"><i data-lucide="minus" class="w-4 h-4 inline mr-1"></i> Limitado</td>
+                                <td class="p-3 text-slate-400"><i data-lucide="minus" class="w-4 h-4 inline mr-1"></i> Alertas Simples</td>
+                                <td class="p-3 text-amber-500"><i data-lucide="check" class="w-4 h-4 inline mr-1"></i> Suporte/Bot</td>
+                                <td class="p-3 text-emerald-600 font-medium"><i data-lucide="check-circle-2" class="w-4 h-4 inline mr-1"></i> Foco Nativo</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
@@ -264,7 +320,6 @@
             <div class="bg-slate-800 px-6 py-4 border-b border-slate-700 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-white flex items-center gap-2"><i data-lucide="image" class="text-blue-400"></i> Galeria de Interfaces (UI)</h2>
                 
-                <!-- Filtros da Galeria -->
                 <div class="flex space-x-2">
                     <button onclick="filterGallery('made4olt')" id="btn-made4olt" class="px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full transition-colors">Made4OLT</button>
                     <button onclick="filterGallery('smartolt')" id="btn-smartolt" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold rounded-full transition-colors">SmartOLT</button>
@@ -273,82 +328,79 @@
             </div>
             
             <div class="p-6">
-                <p class="text-sm text-slate-500 mb-6">Clique nas imagens para ampliar. As imagens abaixo são representações visuais das interfaces. (Substitua as URLs pelas suas imagens reais no servidor).</p>
+                <p class="text-sm text-slate-500 mb-6">Clique nas imagens para ampliar. As imagens abaixo foram carregadas automaticamente do repositório conforme os prefixos definidos.</p>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gallery-grid">
                     
-                    <!-- Imagens Made4OLT -->
-                    <div class="gallery-item made4olt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Made4OLT Dashboard" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'Made4OLT - Visão Geral do Dashboard')">
-                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
-                            <p class="text-xs font-bold text-white uppercase tracking-wider">Made4OLT</p>
-                            <p class="text-xs text-slate-300">Dashboard Principal</p>
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item made4olt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                        <img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=600&q=80" alt="Made4OLT Gráficos" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'Made4OLT - Análise Gráfica de Tráfego')">
-                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
-                            <p class="text-xs font-bold text-white uppercase tracking-wider">Made4OLT</p>
-                            <p class="text-xs text-slate-300">Análise de Tráfego</p>
-                        </div>
-                    </div>
-
-                    <!-- Imagens SmartOLT -->
-                    <div class="gallery-item smartolt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="SmartOLT Lista ONUs" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'SmartOLT - Inventário e Lista de ONUs')">
-                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
-                            <p class="text-xs font-bold text-white uppercase tracking-wider">SmartOLT</p>
-                            <p class="text-xs text-slate-300">Inventário de ONUs</p>
-                        </div>
-                    </div>
-
-                    <div class="gallery-item smartolt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="SmartOLT Provisionamento" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'SmartOLT - Tela de Provisionamento Zero-Touch')">
-                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
-                            <p class="text-xs font-bold text-white uppercase tracking-wider">SmartOLT</p>
-                            <p class="text-xs text-slate-300">Provisionamento Zero-Touch</p>
-                        </div>
-                    </div>
-
-                    <!-- Imagens IXC -->
                     <div class="gallery-item ixc group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                        <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=600&q=80" alt="IXC Soft Integração" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'IXC Soft - Integração de Rede com Contrato')">
+                        <img src="ixc_main.jpg" alt="IXC Main" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'IXC Soft - Main')">
                         <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
                             <p class="text-xs font-bold text-white uppercase tracking-wider">IXC Soft</p>
-                            <p class="text-xs text-slate-300">Integração ERP/Contratos</p>
+                            <p class="text-xs text-slate-300">ixc_main.jpg</p>
                         </div>
                     </div>
-
                     <div class="gallery-item ixc group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="IXC Soft Mapa" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'IXC Soft - Mapeamento de CTOs e Fibra')">
+                        <img src="ixc_olt_list.jpg" alt="IXC OLT List" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'IXC Soft - OLT List')">
                         <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
                             <p class="text-xs font-bold text-white uppercase tracking-wider">IXC Soft</p>
-                            <p class="text-xs text-slate-300">Mapeamento de CTOs</p>
+                            <p class="text-xs text-slate-300">ixc_olt_list.jpg</p>
                         </div>
                     </div>
-                    
-                    <!-- Extras para preencher (Substituir pelos seus arquivos int1.jpg, imagem1.jpg etc) -->
-                    <div class="gallery-item made4olt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=600&q=80" alt="Made4OLT Analise PON" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'Made4OLT - Análise de Sinais da PON')">
+                    <div class="gallery-item ixc group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        <img src="ixc_fiber_analysis_dash.jpg" alt="IXC Fiber Analysis" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'IXC Soft - Fiber Analysis Dash')">
                         <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
-                            <p class="text-xs font-bold text-white uppercase tracking-wider">Made4OLT</p>
-                            <p class="text-xs text-slate-300">Análise de Sinal PON</p>
+                            <p class="text-xs font-bold text-white uppercase tracking-wider">IXC Soft</p>
+                            <p class="text-xs text-slate-300">ixc_fiber_analysis_dash.jpg</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item ixc group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        <img src="ixc_atenuattion_analysis.jpg" alt="IXC Attenuation" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'IXC Soft - Atenuattion Analysis')">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
+                            <p class="text-xs font-bold text-white uppercase tracking-wider">IXC Soft</p>
+                            <p class="text-xs text-slate-300">ixc_atenuattion_analysis.jpg</p>
                         </div>
                     </div>
 
                     <div class="gallery-item smartolt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="SmartOLT App Técnico" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'SmartOLT - Visualização Mobile / App Técnico')">
+                        <img src="int6.jpg" alt="SmartOLT Int6" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'SmartOLT - Interface 6')">
                         <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
                             <p class="text-xs font-bold text-white uppercase tracking-wider">SmartOLT</p>
-                            <p class="text-xs text-slate-300">App do Técnico de Campo</p>
+                            <p class="text-xs text-slate-300">int6.jpg</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item made4olt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        <img src="imagem1.jpg" alt="Made4OLT Imagem 1" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'Made4OLT - Tela 1')">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
+                            <p class="text-xs font-bold text-white uppercase tracking-wider">Made4OLT</p>
+                            <p class="text-xs text-slate-300">imagem1.jpg</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item made4olt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        <img src="imagem2.jpg" alt="Made4OLT Imagem 2" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'Made4OLT - Tela 2')">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
+                            <p class="text-xs font-bold text-white uppercase tracking-wider">Made4OLT</p>
+                            <p class="text-xs text-slate-300">imagem2.jpg</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item made4olt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        <img src="imagem3.jpg" alt="Made4OLT Imagem 3" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'Made4OLT - Tela 3')">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
+                            <p class="text-xs font-bold text-white uppercase tracking-wider">Made4OLT</p>
+                            <p class="text-xs text-slate-300">imagem3.jpg</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item made4olt group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        <img src="imagem4.jpg" alt="Made4OLT Imagem 4" class="gallery-img w-full h-40 object-cover" onclick="openModal(this.src, 'Made4OLT - Tela 4')">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pointer-events-none">
+                            <p class="text-xs font-bold text-white uppercase tracking-wider">Made4OLT</p>
+                            <p class="text-xs text-slate-300">imagem4.jpg</p>
                         </div>
                     </div>
 
                 </div>
             </div>
         </section>
-
     </main>
 
     <footer class="bg-slate-900 text-slate-400 py-10 text-center border-t border-slate-800">
